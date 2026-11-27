@@ -190,9 +190,9 @@ select,input,textarea{background:var(--panel2);border:1px solid var(--line);colo
         <div class="actions"><button class="btn">Tag Habit</button><button class="btn ghost">Tag Other</button></div>
       </div>
       <div class="review-item">
-        <div class="top"><span>Shubham — ₹5,000</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">Still not found — the full-year PhonePe export turned up a 4th Shubham (Shubham Arjun Wagh, ₹265, Apr 6), confirmed not a match</div>
-        <div class="actions"><button class="btn">Search again</button><button class="btn ghost">Skip</button></div>
+        <div class="top"><span>Shubham Kumar Pandey — ₹250 found, ₹5,000 still missing</span><span class="pill conf-med">medium</span></div>
+        <div style="font-size:12px;color:var(--dim)">Identified: 4 small UPI payments (₹80+₹50+₹60+₹60, Jun–Aug 2025), moved from Miscellaneous to Lending &amp; Borrowing. The ₹5,000 you remember isn't in any statement at that amount — maybe cash, a different app, or the number's off</div>
+        <div class="actions"><button class="btn">Mark settled</button><button class="btn ghost">Keep searching</button></div>
       </div>
       <div class="review-item">
         <div class="top"><span>Pravin Thorat — ₹51,292</span><span class="pill conf-low">low</span></div>
@@ -251,10 +251,11 @@ select,input,textarea{background:var(--panel2);border:1px solid var(--line);colo
         <tr><td>Samrendra Singh Sisodia</td><td>₹54,500</td><td>₹52,000</td><td><span class="pill">₹2,500 outstanding</span></td></tr>
         <tr><td>Sumit Gaur</td><td>₹7,000</td><td>₹5,000</td><td><span class="pill conf-med">₹2,000 outstanding</span></td></tr>
         <tr><td>Sumit Beniwal</td><td>₹1,500</td><td>₹0</td><td><span class="pill conf-low">₹1,500 outstanding — new, found this pass</span></td></tr>
+        <tr><td>Shubham Kumar Pandey</td><td>₹250</td><td>₹0</td><td><span class="pill conf-low">₹250 found — the ₹5K you remember is still missing</span></td></tr>
       </table>
       <div class="row-flex" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
         <span style="font-size:13px;font-weight:600">Total real gap (excl. family)</span>
-        <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--amber)">₹1,35,154</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--amber)">₹1,35,404</span>
       </div>
       <div style="font-size:11px;color:var(--dim);margin-top:8px">Gaurav Chahal's ₹15,000 repayment (Aug 3) and the full-year PhonePe export corrected a chunk of this pass — Samrendra's ₹49,000 return is now bank-confirmed (no longer flagged unverified). Rahul Yadav (₹12,912 net, poker) is deliberately not in this table — it's gambling, not lending.</div>
       <div style="font-size:11px;color:var(--dim);margin-top:8px">Fully reconciled across bank (3 statements, Jun'25–Oct'26) + PhonePe, with accounts cross-checked to avoid double counting. *Samrendra's ₹49,000 same-day return is unverified in any statement — based on what you reported.</div>
@@ -307,9 +308,39 @@ select,input,textarea{background:var(--panel2);border:1px solid var(--line);colo
   </div>
 
   <div class="screen" id="report">
-    <div class="card">
-      <h2>17-month summary (Jun'25–Oct'26) — fully reconciled</h2>
-      <p class="narrative">Built from all three bank statements plus a full year of PhonePe (28 Nov 2025 – 27 Nov 2026), replacing anything that drifted across earlier incremental updates. No statement covers Jul 2026 — that's a genuine gap, not a zero month — and Nov 2026 is PhonePe-only so far, no bank/card statement yet. <b>Lending gap: ₹1,35,154</b> across 7 people, led by Gaurav Chahal (₹64,570 — his ₹15,000 Aug repayment had been missed) and Nitin Shivankit (₹39,999, still unconfirmed). Samrendra's ₹49,000 is now bank-confirmed repaid same day, no longer flagged unverified. Separately, <b>₹12,912 went to poker</b> via Rahul Yadav (Jul–Oct) — not a loan, kept out of the lending total. <b>Total net invested: ₹3,48,481</b> — ₹2,03,946 in FDs, ₹1,45,000 into BTC (up ₹50,000 this pass), ₹38,000 via Groww, ₹11,732 via Angel One, offset by a ₹50,197 net mutual fund withdrawal. Habit spending totals <b>₹88,354 over 18 months</b> (~₹4,909/month) — up sharply this pass once liquor-store spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) surfaced from PhonePe. Family support: ₹2,30,000 to Jasbir Kaur and ₹61,975 to Aditi Yadav (Dubai trip for her parents) — real money, deliberately excluded from the "gap." October ran <b>-13%</b> on savings — family support (₹50K), a new Saurabh Singh loan, and EMI landed in the same month, not a sustained trend. Still pending your confirmation: Pravin Thorat (₹51,292), Bimla Chahar (₹11,255) and Ashvani Kumar (₹10,000) — flagged in Review.</p>
+    <div class="row-flex" style="margin-bottom:14px;gap:8px">
+      <button class="btn report-toggle active" data-r="safe" style="flex:1">🧊 Safe Report</button>
+      <button class="btn ghost report-toggle" data-r="real" style="flex:1">🔥 Real Deal</button>
+    </div>
+
+    <div class="report-view" data-view="safe">
+      <div class="card">
+        <h2>Yearly overview</h2>
+        <div style="font-size:12px;color:var(--dim);margin-bottom:12px">Rough, annualized from 17 months of statements (Jun'25–Oct'26) — the version you'd actually show someone.</div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-label">Annual income</div><div class="stat-value income">~₹19.8L</div></div>
+          <div class="stat"><div class="stat-label">Living expenses</div><div class="stat-value expense">~₹11.1L</div></div>
+          <div class="stat"><div class="stat-label">Invested</div><div class="stat-value invest">~₹3.1L</div></div>
+        </div>
+        <div class="row-flex" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+          <span style="font-size:13px;font-weight:600">Implied annual savings</span>
+          <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--teal)">~₹5.6L (~28%)</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Where it roughly goes</h2>
+        <div class="bar-row"><div>Living &amp; family</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹11.1L</div></div>
+        <div class="bar-row"><div>Investments</div><div class="bar-track"><div class="bar-fill i" style="width:28%"></div></div><div class="bar-amount">₹3.1L</div></div>
+        <div class="bar-row"><div>Savings buffer</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-amount">₹5.6L</div></div>
+        <div style="font-size:11px;color:var(--dim);margin-top:8px">About 28% of take-home is going into savings or investments every year — a healthy number. Figures are rounded and smoothed across the year, not a line-by-line audit.</div>
+      </div>
+    </div>
+
+    <div class="report-view" data-view="real" style="display:none">
+      <div class="card">
+        <h2>17-month summary (Jun'25–Oct'26) — fully reconciled</h2>
+        <p class="narrative">Built from all three bank statements plus a full year of PhonePe (28 Nov 2025 – 27 Nov 2026), replacing anything that drifted across earlier incremental updates. No statement covers Jul 2026 — that's a genuine gap, not a zero month — and Nov 2026 is PhonePe-only so far, no bank/card statement yet. <b>Lending gap: ₹1,35,404</b> across 8 people, led by Gaurav Chahal (₹64,570 — his ₹15,000 Aug repayment had been missed) and Nitin Shivankit (₹39,999, still unconfirmed). Samrendra's ₹49,000 is now bank-confirmed repaid same day, no longer flagged unverified. Separately, <b>₹12,912 went to poker</b> via Rahul Yadav (Jul–Oct) — not a loan, kept out of the lending total. <b>Total net invested: ₹3,48,481</b> — ₹2,03,946 in FDs, ₹1,45,000 into BTC (up ₹50,000 this pass), ₹38,000 via Groww, ₹11,732 via Angel One, offset by a ₹50,197 net mutual fund withdrawal. Habit spending totals <b>₹88,354 over 18 months</b> (~₹4,909/month) — up sharply this pass once liquor-store spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) surfaced from PhonePe. Family support: ₹2,30,000 to Jasbir Kaur and ₹61,975 to Aditi Yadav (Dubai trip for her parents) — real money, deliberately excluded from the "gap." October ran <b>-13%</b> on savings — family support (₹50K), a new Saurabh Singh loan, and EMI landed in the same month, not a sustained trend. Still pending your confirmation: Pravin Thorat (₹51,292), Bimla Chahar (₹11,255) and Ashvani Kumar (₹10,000) — flagged in Review.</p>
+      </div>
     </div>
   </div>
 
@@ -346,6 +377,16 @@ document.getElementById('tabs').addEventListener('click',function(e){
 });
 document.querySelectorAll('.switch').forEach(function(s){
   s.addEventListener('click',function(){s.classList.toggle('on')});
+});
+document.querySelectorAll('.report-toggle').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.report-toggle').forEach(function(x){x.classList.remove('active');x.classList.add('ghost')});
+    b.classList.add('active'); b.classList.remove('ghost');
+    var mode = b.dataset.r;
+    document.querySelectorAll('.report-view').forEach(function(v){
+      v.style.display = (v.dataset.view===mode) ? '' : 'none';
+    });
+  });
 });
 </script>
 </body>
