@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Money Trace</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171C;
+    --panel: #1B1F26;
+    --panel-2: #21262F;
+    --line: #2C323C;
+    --text: #E8E6E1;
+    --text-dim: #8B929E;
+    --teal: #4FA98C;
+    --amber: #D9A441;
+    --brick: #C1666B;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+  }
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0;
+  }
+  header span {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .hero {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 24px;
+    margin-bottom: 16px;
+  }
+  .hero-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .hero-number {
+    font-family: 'Source Serif 4', serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 14px;
+  }
+  .stat-label { font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+  .stat-value { font-size: 20px; font-weight: 600; }
+  .stat-value.income { color: var(--teal); }
+  .stat-value.expense { color: var(--brick); }
+  .stat-value.invest { color: var(--amber); }
+
+  .leak-card {
+    background: linear-gradient(135deg, #2A2118, var(--panel));
+    border: 1px solid #3A2E1C;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .leak-card .title { font-size: 14px; color: var(--amber); font-weight: 600; margin-bottom: 4px; }
+  .leak-card .desc { font-size: 13px; color: var(--text-dim); max-width: 300px; }
+  .leak-card .amount { font-family: 'Source Serif 4', serif; font-size: 30px; font-weight: 600; color: var(--amber); white-space: nowrap; }
+
+  section { margin-bottom: 28px; }
+  section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 64px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .bar-row:last-child { border-bottom: none; }
+  .bar-name { color: var(--text); }
+  .bar-track { background: var(--panel-2); border-radius: 6px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; background: var(--teal); }
+  .bar-fill.habit { background: var(--amber); }
+  .bar-fill.invest { background: #6FB8D9; }
+  .bar-amount { text-align: right; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+  .trend {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 18px 8px;
+  }
+  .trend svg { width: 100%; height: auto; display: block; }
+  .trend-legend { display: flex; gap: 18px; font-size: 12px; color: var(--text-dim); margin-top: 8px; padding-bottom: 4px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+  .empty-note {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 24px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Money Trace</h1>
+    <span>Sep 2026</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">Savings rate this month</div>
+    <div class="hero-number">31%</div>
+    <div class="hero-sub">₹58,300 saved of ₹1,87,500 net income — after expenses and investments</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-label">Income</div>
+      <div class="stat-value income">₹1,87,500</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Expenses</div>
+      <div class="stat-value expense">₹94,200</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Invested</div>
+      <div class="stat-value invest">₹35,000</div>
+    </div>
+  </div>
+
+  <div class="leak-card">
+    <div>
+      <div class="title">Habit spending this month</div>
+      <div class="desc">Late-night orders + impulse buys — 9.2% of your income, before you even see it as "spending"</div>
+    </div>
+    <div class="amount">₹17,240</div>
+  </div>
+
+  <section>
+    <h2>Where it went</h2>
+    <div class="bar-row"><div class="bar-name">Rent/Housing</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹32,000</div></div>
+    <div class="bar-row"><div class="bar-name">Food &amp; Dining</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div class="bar-amount">₹16,600</div></div>
+    <div class="bar-row"><div class="bar-name">Habit Spending</div><div class="bar-track"><div class="bar-fill habit" style="width:54%"></div></div><div class="bar-amount">₹17,240</div></div>
+    <div class="bar-row"><div class="bar-name">Transport</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="bar-amount">₹9,000</div></div>
+    <div class="bar-row"><div class="bar-name">Subscriptions</div><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><div class="bar-amount">₹4,400</div></div>
+    <div class="bar-row"><div class="bar-name">Shopping</div><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><div class="bar-amount">₹11,500</div></div>
+    <div class="bar-row"><div class="bar-name">Investments</div><div class="bar-track"><div class="bar-fill invest" style="width:100%"></div></div><div class="bar-amount">₹35,000</div></div>
+  </section>
+
+  <section>
+    <h2>Six-month trend</h2>
+    <div class="trend">
+      <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="10,60 100,50 190,45 280,55 370,40 460,35" fill="none" stroke="#4FA98C" stroke-width="2.5"/>
+        <polyline points="10,120 100,115 190,125 280,105 370,110 460,95" fill="none" stroke="#C1666B" stroke-width="2.5"/>
+        <polyline points="10,150 100,148 190,140 280,145 370,130 460,128" fill="none" stroke="#6FB8D9" stroke-width="2.5"/>
+        <g fill="#8B929E" font-size="11" font-family="Inter, sans-serif">
+          <text x="10" y="172">Apr</text>
+          <text x="100" y="172">May</text>
+          <text x="190" y="172">Jun</text>
+          <text x="280" y="172">Jul</text>
+          <text x="370" y="172">Aug</text>
+          <text x="460" y="172">Sep</text>
+        </g>
+      </svg>
+      <div class="trend-legend">
+        <span><span class="dot" style="background:#4FA98C"></span>Income</span>
+        <span><span class="dot" style="background:#C1666B"></span>Expenses</span>
+        <span><span class="dot" style="background:#6FB8D9"></span>Invested</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="empty-note">Sample data shown. Connect your Supabase project to replace this with your actual parsed statements.</div>
+</div>
+</body>
+</html>

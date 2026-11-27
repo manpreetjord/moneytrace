@@ -1,0 +1,6 @@
+# Never commit actual bank/card/UPI statements or exported data
+*.xls
+*.xlsx
+*.csv
+*.pdf
+uploads/
