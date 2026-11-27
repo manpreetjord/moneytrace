@@ -1,25 +1,38 @@
 # Money Trace — Personal Finance Tracker
 
-A finance tracker built to answer one question: where is the money actually going,
-and what's habit-driven waste vs. real spend.
+A finance tracker built to answer one question: where is the money actually
+going, and what's habit-driven waste vs. real spend vs. real investment.
+
+**Live dashboard:** https://manpreetjord.github.io/moneytrace/ (private repo —
+sign in to GitHub to view)
 
 ## Contents
-- `index.html` — the dashboard UI (10 screens: Dashboard, Transactions, Review queue,
-  Categories, Lending, Income, Insights, Report, Upload, Settings)
-- `schema.sql` — Supabase/Postgres schema (accounts, categories, income, transactions,
-  habit_subtypes, monthly_reconciliation view)
-- `parse-statement.md` — Claude API prompt + wiring notes for parsing bank/card
-  statements into structured transactions
+- `index.html` — the full dashboard, single file, no build step. 11 screens:
+  Dashboard, Monthly (per-month advisor ratings), Transactions, Review queue,
+  Categories, Lending, Income, Insights, Report (Safe/Real Deal toggle),
+  Upload, Settings. Light/dark theme toggle, responsive (sidebar on desktop,
+  tab bar on mobile).
+- `CLAUDE.md` — detailed project context for continuing this with Claude
+  (data sources, dedup methodology, known people, current numbers, house
+  rules). **Read this first** before making changes — it has everything that
+  would otherwise need re-explaining.
+- `schema.sql` — a planned Supabase/Postgres schema (not yet wired up)
+- `parse-statement.md` — a planned Claude API prompt for automated statement
+  parsing (not yet wired up)
+- `.github/workflows/deploy.yml` — auto-deploys `index.html` to GitHub Pages
+  on every push to `master`
 
 ## Status
-UI is built and currently populated with real parsed data from manual analysis
-(HDFC bank statement, credit card, GPay, PhonePe). No live backend yet — Supabase
-+ Pipedream + the Claude API parser described in `parse-statement.md` are designed
-but not wired up.
+Fully manual reconciliation pipeline: statements get uploaded in a Claude
+session, parsed and cross-checked against every other source already on file
+(to avoid double-counting across apps), and the dashboard gets hand-updated
+with the result. No live backend — see `CLAUDE.md` for what's planned vs.
+built.
 
-## Stack (planned)
-Next.js PWA + Supabase + Pipedream + Telegram bot + Claude API parsing layer
+Current data sources reconciled: HDFC bank statements (3), HDFC/CRED credit
+card, PhonePe (full year), GPay, and super.money (full year) — all settling
+to one of two linked accounts (HDFC XX3937, SBI XX2953).
 
 ## Note
-Statement files (.xls/.pdf/.csv) are gitignored — this repo holds the app and
-pipeline code only, not financial source documents.
+Statement files (`.xls`/`.xlsx`/`.csv`/`.pdf`) and an `uploads/` folder are
+gitignored — this repo holds the app and docs only, never raw bank data.
