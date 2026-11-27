@@ -4,368 +4,487 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Money Trace</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#14171C;--panel:#1B1F26;--panel2:#21262F;--line:#2C323C;--text:#E8E6E1;--dim:#8B929E;--teal:#4FA98C;--amber:#D9A441;--brick:#C1666B;--blue:#6FB8D9;}
+:root{
+  --bg:#12151A; --bg2:#0D0F13;
+  --panel:#1A1E25; --panel2:#20252E; --panel3:#262C37;
+  --line:#2A313C; --line-soft:#232931;
+  --text:#ECEAE5; --dim:#8D94A1; --dim2:#6A7079;
+  --teal:#4FB393; --teal-soft:#1B2B27;
+  --amber:#E0AC4C; --amber-soft:#2E2518;
+  --brick:#D4717A; --brick-soft:#2E1B1E;
+  --blue:#6FC0E6; --blue-soft:#182733;
+  --radius-lg:16px; --radius-md:12px; --radius-sm:8px;
+  --shadow:0 1px 2px rgba(0,0,0,.2), 0 8px 24px -8px rgba(0,0,0,.35);
+  --sidenav-w:232px;
+}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-.wrap{max-width:640px;margin:0 auto;padding:20px 16px 80px}
-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
-header h1{font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin:0}
-header span{font-size:12px;color:var(--dim)}
-nav.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:18px;border-bottom:1px solid var(--line);scrollbar-width:none}
-nav.tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;padding:7px 13px;border-radius:20px;font-size:13px;color:var(--dim);background:var(--panel);border:1px solid var(--line);white-space:nowrap;cursor:pointer}
-.tab.active{color:var(--bg);background:var(--teal);border-color:var(--teal);font-weight:600}
+body{margin:0;background:radial-gradient(1200px 600px at 100% -10%, #182029 0%, var(--bg) 55%);color:var(--text);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);min-height:100vh}
+a{color:inherit}
+::selection{background:var(--teal);color:#0B0D10}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+.app{display:flex;max-width:1180px;margin:0 auto;min-height:100vh}
+
+/* ---- Side navigation (desktop) / top bar (mobile) ---- */
+.sidenav{
+  flex:0 0 var(--sidenav-w); display:flex; flex-direction:column; gap:2px;
+  padding:22px 14px; border-right:1px solid var(--line-soft);
+  position:sticky; top:0; height:100vh; overflow-y:auto; background:var(--bg2);
+}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 10px 22px}
+.brand .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--teal),#2E7A63);
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex:0 0 auto;box-shadow:var(--shadow)}
+.brand .name{font-family:'Source Serif 4',serif;font-weight:600;font-size:17px;line-height:1.1}
+.brand .sub{font-size:11px;color:var(--dim);margin-top:1px}
+
+.tab{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:var(--radius-sm);
+  font-size:13.5px;font-weight:500;color:var(--dim);cursor:pointer;white-space:nowrap;
+  border:1px solid transparent;transition:background .15s,color .15s}
+.tab svg{width:17px;height:17px;flex:0 0 auto;opacity:.85}
+.tab:hover{background:var(--panel);color:var(--text)}
+.tab.active{color:var(--text);background:var(--panel2);border-color:var(--line);font-weight:600}
+.tab.active svg{color:var(--teal);opacity:1}
+
+.nav-footer{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--line-soft);font-size:11px;color:var(--dim2)}
+.nav-footer .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);display:inline-block;margin-right:6px;box-shadow:0 0 0 3px var(--teal-soft)}
+
+/* ---- Main content ---- */
+.content{flex:1;min-width:0;padding:22px 28px 90px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.topbar h1{font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;margin:0}
+.topbar .period{font-size:12px;color:var(--dim);background:var(--panel);border:1px solid var(--line);
+  padding:6px 12px;border-radius:20px;white-space:nowrap}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .screen{display:none}
-.screen.active{display:block;animation:fade .25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-.card + .card{margin-top:12px}
-h2{font-size:15px;font-weight:600;margin:0 0 12px}
-.hero-number{font-family:'Source Serif 4',serif;font-size:52px;line-height:1;color:var(--teal);font-weight:600}
-.hero-label{font-size:13px;color:var(--dim);margin-bottom:6px}
-.hero-sub{font-size:13px;color:var(--dim);margin-top:8px}
-.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
-.stat-label{font-size:11px;color:var(--dim);margin-bottom:3px}
-.stat-value{font-size:18px;font-weight:600}
+.screen.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow)}
+.card + .card{margin-top:14px}
+.grid2 > .card{margin-top:0}
+.card.span2{grid-column:1 / -1}
+h2{font-size:14.5px;font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:8px;letter-spacing:.1px}
+h2 .pill{font-weight:500}
+
+.hero-number{font-family:'Source Serif 4',serif;font-size:50px;line-height:1;color:var(--teal);font-weight:600;letter-spacing:-.5px}
+.hero-label{font-size:12.5px;color:var(--dim);margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px}
+.hero-sub{font-size:13px;color:var(--dim);margin-top:10px;line-height:1.55}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:16px 0 2px}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius-md);padding:13px 14px}
+.stat-label{font-size:10.5px;color:var(--dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.stat-value{font-size:18.5px;font-weight:700;letter-spacing:-.2px}
 .income{color:var(--teal)}.expense{color:var(--brick)}.invest{color:var(--blue)}.habit{color:var(--amber)}
-.leak{background:linear-gradient(135deg,#2A2118,var(--panel));border:1px solid #3A2E1C;border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.leak .t{font-size:13px;color:var(--amber);font-weight:600}
-.leak .d{font-size:12px;color:var(--dim);max-width:230px}
-.leak .a{font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;color:var(--amber);white-space:nowrap}
-.bar-row{display:grid;grid-template-columns:110px 1fr 60px;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+
+.leak{background:linear-gradient(135deg,var(--amber-soft),var(--panel) 70%);border:1px solid #3A2E1C;
+  border-radius:var(--radius-lg);padding:17px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;box-shadow:var(--shadow)}
+.leak .t{font-size:13px;color:var(--amber);font-weight:600;display:flex;align-items:center;gap:7px}
+.leak .d{font-size:12px;color:var(--dim);max-width:260px;margin-top:5px;line-height:1.5}
+.leak .a{font-family:'Source Serif 4',serif;font-size:27px;font-weight:600;color:var(--amber);white-space:nowrap}
+
+.bar-row{display:grid;grid-template-columns:128px 1fr 64px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
 .bar-row:last-child{border-bottom:none}
-.bar-track{background:var(--panel2);border-radius:6px;height:7px;overflow:hidden}
-.bar-fill{height:100%;border-radius:6px;background:var(--teal)}
-.bar-fill.h{background:var(--amber)}.bar-fill.i{background:var(--blue)}
-.bar-amount{text-align:right;color:var(--dim)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:left;color:var(--dim);font-weight:500;font-size:11px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-td{padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+.bar-row > div:first-child{color:var(--text);font-weight:500}
+.bar-track{background:var(--panel3);border-radius:6px;height:7px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--teal),#3C9479);transition:width .4s ease}
+.bar-fill.h{background:linear-gradient(90deg,var(--amber),#C98F34)}
+.bar-fill.i{background:linear-gradient(90deg,var(--blue),#4FA0CC)}
+.bar-amount{text-align:right;color:var(--dim);font-variant-numeric:tabular-nums}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;color:var(--dim);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;
+  padding:0 8px 10px;border-bottom:1px solid var(--line)}
+td{padding:11px 8px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tbody tr:hover td{background:var(--panel2)}
 tr:last-child td{border-bottom:none}
-select,input,textarea{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 8px;font-size:12px;font-family:inherit}
-.pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;background:var(--panel2);color:var(--dim)}
-.pill.conf-low{color:var(--brick);background:#2A1A1C}
-.pill.conf-med{color:var(--amber);background:#2A2118}
-.btn{background:var(--teal);color:var(--bg);border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer}
+table.plain td:first-child, table.plain th:first-child{padding-left:0}
+table.plain td:last-child, table.plain th:last-child{padding-right:0}
+
+select,input,textarea{background:var(--panel3);border:1px solid var(--line);color:var(--text);border-radius:var(--radius-sm);
+  padding:7px 9px;font-size:12.5px;font-family:inherit;outline:none}
+select:focus,input:focus,textarea:focus{border-color:var(--teal)}
+
+.pill{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--panel3);color:var(--dim)}
+.pill.conf-low{color:var(--brick);background:var(--brick-soft)}
+.pill.conf-med{color:var(--amber);background:var(--amber-soft)}
+.pill.conf-high{color:var(--teal);background:var(--teal-soft)}
+
+.btn{background:var(--teal);color:#0B1210;border:none;border-radius:var(--radius-sm);padding:8px 14px;font-size:12.5px;
+  font-weight:600;cursor:pointer;transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:scale(.97)}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
-.row-flex{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.review-item{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
-.review-item .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
-.review-item .actions{display:flex;gap:8px;margin-top:8px}
-.chat-log{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.msg{max-width:85%;padding:9px 12px;border-radius:12px;font-size:13px;line-height:1.5}
-.msg.user{align-self:flex-end;background:var(--teal);color:var(--bg)}
-.msg.ai{align-self:flex-start;background:var(--panel2)}
+.btn.ghost:hover{background:var(--panel2)}
+
+.row-flex{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+.review-item{border:1px solid var(--line);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:11px;background:var(--panel2)}
+.review-item:last-child{margin-bottom:0}
+.review-item .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:13.5px;font-weight:500;margin-bottom:7px}
+.review-item .actions{display:flex;gap:8px;margin-top:11px}
+
+.chat-log{display:flex;flex-direction:column;gap:11px;margin-bottom:14px}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.55}
+.msg.user{align-self:flex-end;background:var(--teal);color:#0B1210;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:4px}
 .chat-input{display:flex;gap:8px}
 .chat-input input{flex:1}
-.upload-zone{border:2px dashed var(--line);border-radius:14px;padding:30px 16px;text-align:center;color:var(--dim);font-size:13px}
-.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+
+.upload-zone{border:2px dashed var(--line);border-radius:var(--radius-lg);padding:38px 16px;text-align:center;color:var(--dim);
+  font-size:13.5px;transition:border-color .15s,background .15s}
+.upload-zone:hover{border-color:var(--teal);background:var(--teal-soft)}
+
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px}
 .toggle-row:last-child{border-bottom:none}
-.switch{width:36px;height:20px;background:var(--panel2);border-radius:20px;position:relative;cursor:pointer}
+.switch{width:38px;height:21px;background:var(--panel3);border-radius:20px;position:relative;cursor:pointer;flex:0 0 auto}
 .switch.on{background:var(--teal)}
-.switch::after{content:'';position:absolute;width:16px;height:16px;background:var(--text);border-radius:50%;top:2px;left:2px;transition:.2s}
-.switch.on::after{left:18px;background:var(--bg)}
-.narrative{font-size:13px;line-height:1.7;color:var(--text)}
-.narrative b{color:var(--amber)}
-.empty{font-size:12px;color:var(--dim);text-align:center;padding:20px 0}
+.switch::after{content:'';position:absolute;width:17px;height:17px;background:var(--text);border-radius:50%;top:2px;left:2px;transition:.2s}
+.switch.on::after{left:19px;background:#0B1210}
+
+.narrative{font-size:13.5px;line-height:1.75;color:var(--text)}
+.narrative b{color:var(--amber);font-weight:600}
+.empty{font-size:12px;color:var(--dim);text-align:center;padding:24px 0}
+
+.report-toggle{flex:1;display:flex;align-items:center;justify-content:center;gap:7px}
+
+@media (max-width:900px){
+  .app{display:block}
+  .sidenav{position:sticky;top:0;z-index:20;flex-direction:row;height:auto;width:auto;align-items:center;
+    overflow-x:auto;padding:12px 14px;gap:6px;background:var(--bg2);scrollbar-width:none}
+  .sidenav::-webkit-scrollbar{display:none}
+  .brand{display:none}
+  .tab{flex:0 0 auto;padding:8px 13px;border-radius:20px;background:var(--panel)}
+  .tab.active{background:var(--teal);color:#0B1210;border-color:var(--teal)}
+  .tab.active svg{color:#0B1210}
+  .nav-footer{display:none}
+  .content{padding:18px 16px 90px}
+  .grid2{grid-template-columns:1fr}
+  .hero-number{font-size:42px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header><h1>Money Trace</h1><span>Oct 2026</span></header>
-  <nav class="tabs" id="tabs">
-    <div class="tab active" data-s="dashboard">Dashboard</div>
-    <div class="tab" data-s="txns">Transactions</div>
-    <div class="tab" data-s="review">Review</div>
-    <div class="tab" data-s="categories">Categories</div>
-    <div class="tab" data-s="lending">Lending</div>
-    <div class="tab" data-s="income">Income</div>
-    <div class="tab" data-s="insights">Insights</div>
-    <div class="tab" data-s="report">Report</div>
-    <div class="tab" data-s="upload">Upload</div>
-    <div class="tab" data-s="settings">Settings</div>
+<div class="app">
+  <nav class="sidenav" id="tabs">
+    <div class="brand"><div class="mark">💸</div><div><div class="name">Money Trace</div><div class="sub">Personal finance, reconciled</div></div></div>
+    <div class="tab active" data-s="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</div>
+    <div class="tab" data-s="txns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>Transactions</div>
+    <div class="tab" data-s="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/></svg>Review</div>
+    <div class="tab" data-s="categories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3H4a1 1 0 0 0-1 1v6l10 10 7-7L10 3Z"/><circle cx="7.3" cy="7.3" r="1.3" fill="currentColor" stroke="none"/></svg>Categories</div>
+    <div class="tab" data-s="lending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"/><circle cx="17.5" cy="9" r="2.3"/><path d="M15.3 20c.3-2.7 2-5 5.2-5.3"/></svg>Lending</div>
+    <div class="tab" data-s="income"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><circle cx="17" cy="14.5" r="1.3" fill="currentColor" stroke="none"/></svg>Income</div>
+    <div class="tab" data-s="insights"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg>Insights</div>
+    <div class="tab" data-s="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M15 2v5h5"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>Report</div>
+    <div class="tab" data-s="upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M4 19h16"/></svg>Upload</div>
+    <div class="tab" data-s="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2"/></svg>Settings</div>
+    <div class="nav-footer"><span class="dot"></span>Synced through Oct 2026</div>
   </nav>
 
-  <div class="screen active" id="dashboard">
-    <div class="card">
-      <div class="hero-label">Savings rate this month</div>
-      <div class="hero-number" style="color:var(--brick)">-13%</div>
-      <div class="hero-sub">-₹22,638 this month on ₹1,77,187 income — family support + lending + EMI all landed together</div>
-      <div class="stat-row">
-        <div class="stat"><div class="stat-label">Income</div><div class="stat-value income">₹1.77L</div></div>
-        <div class="stat"><div class="stat-label">Expenses</div><div class="stat-value expense">₹1.70L</div></div>
-        <div class="stat"><div class="stat-label">Invested</div><div class="stat-value invest">₹30K</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="row-flex">
-        <div>
-          <div class="hero-label" style="margin-bottom:2px">Total invested to date</div>
-          <div style="font-size:11px;color:var(--dim)">FD ₹2,03,946 · BTC ₹1,45,000 · Groww ₹38,000 · Angel One ₹11,732 · MF -₹50,197</div>
-        </div>
-        <div style="font-family:'Source Serif 4',serif;font-size:28px;font-weight:600;color:var(--blue);white-space:nowrap">₹3,48,481</div>
-      </div>
-    </div>
-    <div class="card leak">
-      <div><div class="t">Habit spending — biggest leak</div><div class="d">This month ₹8,041 — above the ~₹4,909/month average across 18 months, café/paan/wine/liquor combined</div></div>
-      <div class="a">₹8,041</div>
-    </div>
-    <div class="card leak">
-      <div><div class="t">Poker — found this pass, wasn't tracked before</div><div class="d">₹12,912 net to Rahul Yadav, Jul–Oct 2026 (₹14,500 sent, ₹1,588 came back) — not a loan, kept separate from the lending ledger</div></div>
-      <div class="a">₹12,912</div>
-    </div>
-    <div class="card">
-      <h2>Where it went — October</h2>
-      <div class="bar-row"><div>Family Support</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹50K</div></div>
-      <div class="bar-row"><div>Uncategorized P2P</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-amount">₹46K</div></div>
-      <div class="bar-row"><div>Investments (BTC)</div><div class="bar-track"><div class="bar-fill i" style="width:60%"></div></div><div class="bar-amount">₹30K</div></div>
-      <div class="bar-row"><div>EMI/Loans</div><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><div class="bar-amount">₹28.7K</div></div>
-      <div class="bar-row"><div>Lending (new)</div><div class="bar-track"><div class="bar-fill h" style="width:28%"></div></div><div class="bar-amount">₹14.2K</div></div>
-      <div class="bar-row"><div>Habit Spending</div><div class="bar-track"><div class="bar-fill h" style="width:16%"></div></div><div class="bar-amount">₹8K</div></div>
-    </div>
-    <div class="card">
-      <h2>May–Oct 2026 trend</h2>
-      <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%">
-        <polyline points="10,80 100,50 190,15 280,32 370,20 460,22" fill="none" stroke="#4FA98C" stroke-width="2.5"/>
-        <polyline points="10,90 100,105 190,70 280,140 370,115 460,10" fill="none" stroke="#C1666B" stroke-width="2.5"/>
-        <g fill="#8B929E" font-size="11" font-family="Inter, sans-serif">
-          <text x="10" y="172">May</text><text x="100" y="172">Jun</text><text x="190" y="172">Jul*</text>
-          <text x="280" y="172">Aug</text><text x="370" y="172">Sep</text><text x="460" y="172">Oct</text>
-        </g>
-      </svg>
-      <div style="display:flex;gap:18px;font-size:12px;color:var(--dim);margin-top:6px">
-        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4FA98C;margin-right:6px"></span>Income</span>
-        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C1666B;margin-right:6px"></span>Expenses</span>
-      </div>
-      <div style="font-size:11px;color:var(--dim);margin-top:8px">*Jul 2026 gap in data (no statement covers it). Oct's expense spike is Family Support (₹50K) + new lending (₹14.2K) + EMI, landing in the same month. Nov 2026 isn't shown here yet — only PhonePe has posted so far (₹1.53L out, incl. a ₹50K Jasbir Kaur payment and a ₹40K BTC buy), no bank/card statement for the month yet.</div>
-    </div>
-  </div>
+  <main class="content">
+    <div class="topbar"><h1>Dashboard</h1><span class="period">Statements through Oct 2026 · PhonePe through Nov 27</span></div>
 
-  <div class="screen" id="txns">
-    <div class="card">
-      <h2>All transactions</h2>
-      <table>
-        <tr><th>Date</th><th>Merchant</th><th>Category</th><th>Amt</th></tr>
-        <tr><td>30 Oct</td><td>Jasbir Kaur</td><td><select><option selected>Family Support</option></select></td><td class="expense">₹50,000</td></tr>
-        <tr><td>19 Oct</td><td>Khebade Saurabh Nand (BTC)</td><td><select><option selected>Investments</option></select></td><td class="expense">₹30,000</td></tr>
-        <tr><td>16 Oct</td><td>Saurabh Singh</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense">₹9,000</td></tr>
-        <tr><td>11 Oct</td><td>CRED Club (card bill)</td><td><select><option selected>EMI/Loans</option></select></td><td class="expense">₹28,732</td></tr>
-        <tr><td>31 Oct</td><td>Salary — TCS</td><td><select><option selected>Income</option></select></td><td class="income">₹1,77,187</td></tr>
-        <tr><td>2 Aug</td><td>Samrendra Singh Sisodia</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense">₹49,000</td></tr>
-        <tr><td>2 Aug</td><td>Samrendra Singh Sisodia (returned same day — confirmed)</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="income">₹49,000</td></tr>
-        <tr><td>20 Aug</td><td>Gaurav Chahal</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense">₹3,000</td></tr>
-        <tr><td>19 Apr</td><td>Raj Wines (card)</td><td><select><option selected>Habit Spending</option></select></td><td class="expense">₹1,440</td></tr>
-        <tr><td>19 Apr</td><td>Arun Kathwate and Sons (fuel)</td><td><select><option selected>Transport</option></select></td><td class="expense">₹1,515</td></tr>
-        <tr><td>17 Apr</td><td>Anthropic.com (card)</td><td><select><option selected>Subscriptions</option></select></td><td class="expense">₹551</td></tr>
-        <tr><td>30 Apr</td><td>#Croma (card, 6mo EMI)</td><td><select><option selected>Shopping</option></select></td><td class="expense">₹46,740</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="screen" id="review">
-    <div class="card">
-      <h2>Needs your eye <span class="pill conf-low">New since Oct refresh</span></h2>
-      <div class="review-item">
-        <div class="top"><span>XXXXXXXX2499 (masked card) — ₹39,999</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">8 Jun — tagged as lending to Nitin Shivankit, still unconfirmed if repaid</div>
-        <div class="actions"><button class="btn">Mark repaid</button><button class="btn ghost">Still owed</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Saurabh Singh — ₹8,585 net</span><span class="pill conf-med">medium</span></div>
-        <div style="font-size:12px;color:var(--dim)">Full history: ₹31,090 lent, ₹22,505 repaid — gap narrowing but not closed</div>
-        <div class="actions"><button class="btn">Mark settled</button><button class="btn ghost">Still owed</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Smokers Store — ₹550</span><span class="pill conf-med">medium</span></div>
-        <div style="font-size:12px;color:var(--dim)">Guessed: Miscellaneous — likely belongs in Habit Spending</div>
-        <div class="actions"><button class="btn">Move to Habit</button><button class="btn ghost">Keep</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Shaan Enterprises (card) — ₹1,085</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">Unconfirmed if this is a liquor store — you weren't sure</div>
-        <div class="actions"><button class="btn">Tag Habit</button><button class="btn ghost">Tag Other</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Shubham Kumar Pandey — ₹250 found, ₹5,000 still missing</span><span class="pill conf-med">medium</span></div>
-        <div style="font-size:12px;color:var(--dim)">Identified: 4 small UPI payments (₹80+₹50+₹60+₹60, Jun–Aug 2025), moved from Miscellaneous to Lending &amp; Borrowing. The ₹5,000 you remember isn't in any statement at that amount — maybe cash, a different app, or the number's off</div>
-        <div class="actions"><button class="btn">Mark settled</button><button class="btn ghost">Keep searching</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Pravin Thorat — ₹51,292</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">2 Feb — large one-time UPI payment, currently sitting in Uncategorized, waiting on you</div>
-        <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Bimla Chahar — ₹11,255</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">25 Feb — found in the full-year PhonePe export, not yet categorized</div>
-        <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Ashvani Kumar — ₹10,000</span><span class="pill conf-low">low</span></div>
-        <div style="font-size:12px;color:var(--dim)">21 Nov — found in the full-year PhonePe export, not yet categorized</div>
-        <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
-      </div>
-      <div class="review-item">
-        <div class="top"><span>Dnyaneshwar Balaji Komple — ₹9,000</span><span class="pill conf-med">medium</span></div>
-        <div style="font-size:12px;color:var(--dim)">7 Feb — bank narration itself says "CAR BUMPER REPAIR", recategorized from Miscellaneous to Transport</div>
-        <div class="actions"><button class="btn">Confirm</button><button class="btn ghost">Undo</button></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="screen" id="categories">
-    <div class="card">
-      <h2>Categories</h2>
-      <table>
-        <tr><th>Name</th><th>Nature</th></tr>
-        <tr><td>Groceries</td><td><span class="pill">need</span></td></tr>
-        <tr><td>Food &amp; Dining</td><td><span class="pill">want</span></td></tr>
-        <tr><td>Habit Spending</td><td><span class="pill conf-med">habit</span></td></tr>
-        <tr><td>Investments</td><td><span class="pill">investment</span></td></tr>
-        <tr><td>Lending &amp; Borrowing</td><td><span class="pill">transfer</span></td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h2>Habit subtypes</h2>
-      <div class="row-flex" style="margin-bottom:10px"><span class="pill">Daily Cafe</span><span class="pill">Vices (Paan)</span><span class="pill">Alcohol (Wine Shops)</span></div>
-      <div class="row-flex"><input placeholder="Add subtype…" style="flex:1"><button class="btn">Add</button></div>
-    </div>
-  </div>
-
-  <div class="screen" id="lending">
-    <div class="card">
-      <h2>Family &amp; lending (from statement)</h2>
-      <table>
-        <tr><th>Person</th><th>Lent</th><th>Repaid</th><th>Net Gap</th></tr>
-        <tr><td>Gurkirpal Singh</td><td>₹1.7L</td><td>—</td><td><span class="pill conf-med">college fees, not a loan</span></td></tr>
-        <tr><td>Jasbir Kaur</td><td>₹2,30,000</td><td>—</td><td><span class="pill conf-med">family, not a loan</span></td></tr>
-        <tr><td>Aditi Yadav</td><td>₹61,975</td><td>—</td><td><span class="pill conf-med">Dubai trip for parents, not a loan</span></td></tr>
-        <tr><td>Gaurav Chahal</td><td>₹79,570</td><td>₹15,000</td><td><span class="pill conf-low">₹64,570 outstanding</span></td></tr>
-        <tr><td>Nitin Shivankit</td><td>₹39,999</td><td>₹0</td><td><span class="pill conf-low">₹39,999 outstanding</span></td></tr>
-        <tr><td>Sunny Bose</td><td>₹20,000</td><td>₹5,000</td><td><span class="pill conf-med">₹15,000 outstanding</span></td></tr>
-        <tr><td>Saurabh Singh</td><td>₹32,090</td><td>₹22,505</td><td><span class="pill conf-med">₹9,585 outstanding — narrowing</span></td></tr>
-        <tr><td>Samrendra Singh Sisodia</td><td>₹54,500</td><td>₹52,000</td><td><span class="pill">₹2,500 outstanding</span></td></tr>
-        <tr><td>Sumit Gaur</td><td>₹7,000</td><td>₹5,000</td><td><span class="pill conf-med">₹2,000 outstanding</span></td></tr>
-        <tr><td>Sumit Beniwal</td><td>₹1,500</td><td>₹0</td><td><span class="pill conf-low">₹1,500 outstanding — new, found this pass</span></td></tr>
-        <tr><td>Shubham Kumar Pandey</td><td>₹250</td><td>₹0</td><td><span class="pill conf-low">₹250 found — the ₹5K you remember is still missing</span></td></tr>
-      </table>
-      <div class="row-flex" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
-        <span style="font-size:13px;font-weight:600">Total real gap (excl. family)</span>
-        <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--amber)">₹1,35,404</span>
-      </div>
-      <div style="font-size:11px;color:var(--dim);margin-top:8px">Gaurav Chahal's ₹15,000 repayment (Aug 3) and the full-year PhonePe export corrected a chunk of this pass — Samrendra's ₹49,000 return is now bank-confirmed (no longer flagged unverified). Rahul Yadav (₹12,912 net, poker) is deliberately not in this table — it's gambling, not lending.</div>
-      <div style="font-size:11px;color:var(--dim);margin-top:8px">Fully reconciled across bank (3 statements, Jun'25–Oct'26) + PhonePe, with accounts cross-checked to avoid double counting. *Samrendra's ₹49,000 same-day return is unverified in any statement — based on what you reported.</div>
-    </div>
-    <div class="card">
-      <h2>Your own account</h2>
-      <div style="font-size:12px;color:var(--dim);line-height:1.6">GPay linked to this account shows ₹36,373.55 spent Mar–Aug 2026: ₹7,000 to Mutual Funds ICCL (via SBI — so investing is happening here, just not visible in HDFC), Redbus/IRCTC travel ₹9,788, Amazon Pay ₹2,829, Jeevansathi ₹5,437, plus small paan-shop vendors. ₹3.14L of the ₹3.5L moved here is still untraced beyond this window.</div>
-    </div>
-  </div>
-
-  <div class="screen" id="income">
-    <div class="card">
-      <h2>Income sources</h2>
-      <table>
-        <tr><th>Source</th><th>Amount</th><th>Date</th><th>Recurring</th></tr>
-        <tr><td>Salary — TCS (Oct)</td><td class="income">₹1,77,187</td><td>31 Oct</td><td>Yes</td></tr>
-        <tr><td>Salary — TCS (Sep)</td><td class="income">₹1,81,430</td><td>30 Sep</td><td>Yes</td></tr>
-        <tr><td>Salary — TCS (Aug)</td><td class="income">₹1,32,915</td><td>1 Aug</td><td>Yes</td></tr>
-        <tr><td>Salary — TCS (Jun)</td><td class="income">₹1,51,994</td><td>30 Jun</td><td>Yes</td></tr>
-        <tr><td>Motilal Oswal MF credit</td><td class="income">₹61,164</td><td>6 Feb</td><td>No</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h2>Investments — full reconciliation (Jun'25–Oct'26)</h2>
-      <table>
-        <tr><th>Vehicle</th><th>In</th><th>Out</th><th>Net</th></tr>
-        <tr><td>Fixed Deposits (7 opened)</td><td>₹66,054 matured/closed early</td><td>₹2,70,000</td><td><span class="pill">₹2,03,946 still locked</span></td></tr>
-        <tr><td>BTC (via Tushar Agarwal, Khebade + "rahulrahul1ptyes" P2P)</td><td>₹0</td><td>₹1,45,000</td><td><span class="pill">₹1,45,000</span></td></tr>
-        <tr><td>Groww</td><td>₹5,000 (one reversed payment)</td><td>₹43,000</td><td><span class="pill">₹38,000</span></td></tr>
-        <tr><td>Angel One Securities</td><td>₹68</td><td>₹11,800</td><td><span class="pill">₹11,732</span></td></tr>
-        <tr><td>Mutual Funds (Motilal Oswal)</td><td>₹75,197 redeemed</td><td>₹25,000</td><td><span class="pill conf-med">-₹50,197 — net withdrawn, not invested</span></td></tr>
-      </table>
-      <div class="row-flex" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
-        <span style="font-size:13px;font-weight:600">Total net invested</span>
-        <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--blue)">₹3,48,481</span>
-      </div>
-      <div style="font-size:11px;color:var(--dim);margin-top:8px">Groww (₹38,000, 5 transactions Jun–Nov'25) was found in the previous pass. This pass's full-year PhonePe export added ₹50,000 more BTC — ₹10,000 via Tushar Agarwal (Feb 14) and ₹40,000 via "rahulrahul1ptyes" (Nov 14), both on the SBI-linked account the bank statement never saw.</div>
-    </div>
-  </div>
-
-  <div class="screen" id="insights">
-    <div class="card">
-      <h2>Ask about your money</h2>
-      <div class="chat-log">
-        <div class="msg user">How much am I actually leaking to habits?</div>
-        <div class="msg ai">₹88,354 over 18 months — about ₹4,909/month, across café, paan and wine/liquor shops. It's steady every month unlike your other spend categories, and jumped this pass once the full-year PhonePe export surfaced liquor spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) that the bank statement never showed.</div>
-      </div>
-      <div class="chat-input"><input placeholder="Ask a question…"><button class="btn">Ask</button></div>
-    </div>
-  </div>
-
-  <div class="screen" id="report">
-    <div class="row-flex" style="margin-bottom:14px;gap:8px">
-      <button class="btn report-toggle active" data-r="safe" style="flex:1">🧊 Safe Report</button>
-      <button class="btn ghost report-toggle" data-r="real" style="flex:1">🔥 Real Deal</button>
-    </div>
-
-    <div class="report-view" data-view="safe">
+    <div class="screen active" id="dashboard">
       <div class="card">
-        <h2>Yearly overview</h2>
-        <div style="font-size:12px;color:var(--dim);margin-bottom:12px">Rough, annualized from 17 months of statements (Jun'25–Oct'26) — the version you'd actually show someone.</div>
+        <div class="hero-label">Savings rate this month</div>
+        <div class="hero-number" style="color:var(--brick)">-13%</div>
+        <div class="hero-sub">-₹22,638 this month on ₹1,77,187 income — family support + lending + EMI all landed together</div>
         <div class="stat-row">
-          <div class="stat"><div class="stat-label">Annual income</div><div class="stat-value income">~₹19.8L</div></div>
-          <div class="stat"><div class="stat-label">Living expenses</div><div class="stat-value expense">~₹11.1L</div></div>
-          <div class="stat"><div class="stat-label">Invested</div><div class="stat-value invest">~₹3.1L</div></div>
-        </div>
-        <div class="row-flex" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
-          <span style="font-size:13px;font-weight:600">Implied annual savings</span>
-          <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--teal)">~₹5.6L (~28%)</span>
+          <div class="stat"><div class="stat-label">Income</div><div class="stat-value income">₹1.77L</div></div>
+          <div class="stat"><div class="stat-label">Expenses</div><div class="stat-value expense">₹1.70L</div></div>
+          <div class="stat"><div class="stat-label">Invested</div><div class="stat-value invest">₹30K</div></div>
         </div>
       </div>
-      <div class="card">
-        <h2>Where it roughly goes</h2>
-        <div class="bar-row"><div>Living &amp; family</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹11.1L</div></div>
-        <div class="bar-row"><div>Investments</div><div class="bar-track"><div class="bar-fill i" style="width:28%"></div></div><div class="bar-amount">₹3.1L</div></div>
-        <div class="bar-row"><div>Savings buffer</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-amount">₹5.6L</div></div>
-        <div style="font-size:11px;color:var(--dim);margin-top:8px">About 28% of take-home is going into savings or investments every year — a healthy number. Figures are rounded and smoothed across the year, not a line-by-line audit.</div>
+
+      <div class="grid2" style="margin-top:14px">
+        <div class="card">
+          <div class="hero-label" style="margin-bottom:2px">Total invested to date</div>
+          <div style="font-size:11.5px;color:var(--dim);line-height:1.6;margin-bottom:10px">FD ₹2,03,946 · BTC ₹1,45,000 · Groww ₹38,000 · Angel One ₹11,732 · MF -₹50,197</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;color:var(--blue)">₹3,48,481</div>
+        </div>
+        <div class="leak">
+          <div><div class="t">🔥 Habit spending — biggest leak</div><div class="d">This month ₹8,041 — above the ~₹4,909/month average across 18 months, café/paan/wine/liquor combined</div></div>
+          <div class="a">₹8,041</div>
+        </div>
+      </div>
+
+      <div class="card leak" style="margin-top:14px">
+        <div><div class="t">🃏 Poker — found this pass, wasn't tracked before</div><div class="d">₹12,912 net to Rahul Yadav, Jul–Oct 2026 (₹14,500 sent, ₹1,588 came back) — not a loan, kept separate from the lending ledger</div></div>
+        <div class="a">₹12,912</div>
+      </div>
+
+      <div class="grid2" style="margin-top:14px">
+        <div class="card">
+          <h2>Where it went — October</h2>
+          <div class="bar-row"><div>Family Support</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹50K</div></div>
+          <div class="bar-row"><div>Uncategorized P2P</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-amount">₹46K</div></div>
+          <div class="bar-row"><div>Investments (BTC)</div><div class="bar-track"><div class="bar-fill i" style="width:60%"></div></div><div class="bar-amount">₹30K</div></div>
+          <div class="bar-row"><div>EMI/Loans</div><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><div class="bar-amount">₹28.7K</div></div>
+          <div class="bar-row"><div>Lending (new)</div><div class="bar-track"><div class="bar-fill h" style="width:28%"></div></div><div class="bar-amount">₹14.2K</div></div>
+          <div class="bar-row"><div>Habit Spending</div><div class="bar-track"><div class="bar-fill h" style="width:16%"></div></div><div class="bar-amount">₹8K</div></div>
+        </div>
+
+        <div class="card">
+          <h2>May–Oct 2026 trend</h2>
+          <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <defs>
+              <linearGradient id="incomeFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4FB393" stop-opacity=".25"/>
+                <stop offset="100%" stop-color="#4FB393" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="10,80 100,50 190,15 280,32 370,20 460,22 460,180 10,180" fill="url(#incomeFade)"/>
+            <polyline points="10,80 100,50 190,15 280,32 370,20 460,22" fill="none" stroke="#4FB393" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="10,90 100,105 190,70 280,140 370,115 460,10" fill="none" stroke="#D4717A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="#8D94A1" font-size="11" font-family="Inter, sans-serif">
+              <text x="10" y="172">May</text><text x="100" y="172">Jun</text><text x="190" y="172">Jul*</text>
+              <text x="280" y="172">Aug</text><text x="370" y="172">Sep</text><text x="460" y="172">Oct</text>
+            </g>
+          </svg>
+          <div style="display:flex;gap:18px;font-size:12px;color:var(--dim);margin-top:6px">
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4FB393;margin-right:6px"></span>Income</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D4717A;margin-right:6px"></span>Expenses</span>
+          </div>
+          <div style="font-size:11px;color:var(--dim);margin-top:10px;line-height:1.5">*Jul 2026 gap in data (no statement covers it). Oct's expense spike is Family Support (₹50K) + new lending (₹14.2K) + EMI, landing in the same month. Nov 2026 isn't shown here yet — only PhonePe has posted so far (₹1.53L out, incl. a ₹50K Jasbir Kaur payment and a ₹40K BTC buy), no bank/card statement for the month yet.</div>
+        </div>
       </div>
     </div>
 
-    <div class="report-view" data-view="real" style="display:none">
+    <div class="screen" id="txns">
       <div class="card">
-        <h2>17-month summary (Jun'25–Oct'26) — fully reconciled</h2>
-        <p class="narrative">Built from all three bank statements plus a full year of PhonePe (28 Nov 2025 – 27 Nov 2026), replacing anything that drifted across earlier incremental updates. No statement covers Jul 2026 — that's a genuine gap, not a zero month — and Nov 2026 is PhonePe-only so far, no bank/card statement yet. <b>Lending gap: ₹1,35,404</b> across 8 people, led by Gaurav Chahal (₹64,570 — his ₹15,000 Aug repayment had been missed) and Nitin Shivankit (₹39,999, still unconfirmed). Samrendra's ₹49,000 is now bank-confirmed repaid same day, no longer flagged unverified. Separately, <b>₹12,912 went to poker</b> via Rahul Yadav (Jul–Oct) — not a loan, kept out of the lending total. <b>Total net invested: ₹3,48,481</b> — ₹2,03,946 in FDs, ₹1,45,000 into BTC (up ₹50,000 this pass), ₹38,000 via Groww, ₹11,732 via Angel One, offset by a ₹50,197 net mutual fund withdrawal. Habit spending totals <b>₹88,354 over 18 months</b> (~₹4,909/month) — up sharply this pass once liquor-store spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) surfaced from PhonePe. Family support: ₹2,30,000 to Jasbir Kaur and ₹61,975 to Aditi Yadav (Dubai trip for her parents) — real money, deliberately excluded from the "gap." October ran <b>-13%</b> on savings — family support (₹50K), a new Saurabh Singh loan, and EMI landed in the same month, not a sustained trend. Still pending your confirmation: Pravin Thorat (₹51,292), Bimla Chahar (₹11,255) and Ashvani Kumar (₹10,000) — flagged in Review.</p>
+        <h2>All transactions</h2>
+        <table>
+          <tr><th>Date</th><th>Merchant</th><th>Category</th><th style="text-align:right">Amt</th></tr>
+          <tr><td>30 Oct</td><td>Jasbir Kaur</td><td><select><option selected>Family Support</option></select></td><td class="expense" style="text-align:right">₹50,000</td></tr>
+          <tr><td>19 Oct</td><td>Khebade Saurabh Nand (BTC)</td><td><select><option selected>Investments</option></select></td><td class="expense" style="text-align:right">₹30,000</td></tr>
+          <tr><td>16 Oct</td><td>Saurabh Singh</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense" style="text-align:right">₹9,000</td></tr>
+          <tr><td>11 Oct</td><td>CRED Club (card bill)</td><td><select><option selected>EMI/Loans</option></select></td><td class="expense" style="text-align:right">₹28,732</td></tr>
+          <tr><td>31 Oct</td><td>Salary — TCS</td><td><select><option selected>Income</option></select></td><td class="income" style="text-align:right">₹1,77,187</td></tr>
+          <tr><td>2 Aug</td><td>Samrendra Singh Sisodia</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense" style="text-align:right">₹49,000</td></tr>
+          <tr><td>2 Aug</td><td>Samrendra Singh Sisodia (returned same day — confirmed)</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="income" style="text-align:right">₹49,000</td></tr>
+          <tr><td>20 Aug</td><td>Gaurav Chahal</td><td><select><option selected>Lending &amp; Borrowing</option></select></td><td class="expense" style="text-align:right">₹3,000</td></tr>
+          <tr><td>19 Apr</td><td>Raj Wines (card)</td><td><select><option selected>Habit Spending</option></select></td><td class="expense" style="text-align:right">₹1,440</td></tr>
+          <tr><td>19 Apr</td><td>Arun Kathwate and Sons (fuel)</td><td><select><option selected>Transport</option></select></td><td class="expense" style="text-align:right">₹1,515</td></tr>
+          <tr><td>17 Apr</td><td>Anthropic.com (card)</td><td><select><option selected>Subscriptions</option></select></td><td class="expense" style="text-align:right">₹551</td></tr>
+          <tr><td>30 Apr</td><td>#Croma (card, 6mo EMI)</td><td><select><option selected>Shopping</option></select></td><td class="expense" style="text-align:right">₹46,740</td></tr>
+        </table>
       </div>
     </div>
-  </div>
 
-  <div class="screen" id="upload">
-    <div class="card">
-      <h2>Upload a statement</h2>
-      <div class="upload-zone">Drop a PDF here or tap to choose a file<br>HDFC savings or credit card statement</div>
+    <div class="screen" id="review">
+      <div class="card">
+        <h2>Needs your eye <span class="pill conf-low">New since Oct refresh</span></h2>
+        <div class="review-item">
+          <div class="top"><span>XXXXXXXX2499 (masked card) — ₹39,999</span><span class="pill conf-low">low</span></div>
+          <div style="font-size:12px;color:var(--dim)">8 Jun — tagged as lending to Nitin Shivankit, still unconfirmed if repaid</div>
+          <div class="actions"><button class="btn">Mark repaid</button><button class="btn ghost">Still owed</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Saurabh Singh — ₹9,585 net</span><span class="pill conf-med">medium</span></div>
+          <div style="font-size:12px;color:var(--dim)">Full history: ₹32,090 lent, ₹22,505 repaid — gap narrowing but not closed</div>
+          <div class="actions"><button class="btn">Mark settled</button><button class="btn ghost">Still owed</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Smokers Store — ₹550</span><span class="pill conf-med">medium</span></div>
+          <div style="font-size:12px;color:var(--dim)">Guessed: Miscellaneous — likely belongs in Habit Spending</div>
+          <div class="actions"><button class="btn">Move to Habit</button><button class="btn ghost">Keep</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Shaan Enterprises (card) — ₹1,085</span><span class="pill conf-low">low</span></div>
+          <div style="font-size:12px;color:var(--dim)">Unconfirmed if this is a liquor store — you weren't sure</div>
+          <div class="actions"><button class="btn">Tag Habit</button><button class="btn ghost">Tag Other</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Shubham Kumar Pandey — ₹250 found, ₹5,000 still missing</span><span class="pill conf-med">medium</span></div>
+          <div style="font-size:12px;color:var(--dim)">Identified: 4 small UPI payments (₹80+₹50+₹60+₹60, Jun–Aug 2025), moved from Miscellaneous to Lending &amp; Borrowing. The ₹5,000 you remember isn't in any statement at that amount — maybe cash, a different app, or the number's off</div>
+          <div class="actions"><button class="btn">Mark settled</button><button class="btn ghost">Keep searching</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Pravin Thorat — ₹51,292</span><span class="pill conf-low">low</span></div>
+          <div style="font-size:12px;color:var(--dim)">2 Feb — large one-time UPI payment, currently sitting in Uncategorized, waiting on you</div>
+          <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Bimla Chahar — ₹11,255</span><span class="pill conf-low">low</span></div>
+          <div style="font-size:12px;color:var(--dim)">25 Feb — found in the full-year PhonePe export, not yet categorized</div>
+          <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Ashvani Kumar — ₹10,000</span><span class="pill conf-low">low</span></div>
+          <div style="font-size:12px;color:var(--dim)">21 Nov — found in the full-year PhonePe export, not yet categorized</div>
+          <div class="actions"><button class="btn">Tag category</button><button class="btn ghost">Skip</button></div>
+        </div>
+        <div class="review-item">
+          <div class="top"><span>Dnyaneshwar Balaji Komple — ₹9,000</span><span class="pill conf-high">resolved</span></div>
+          <div style="font-size:12px;color:var(--dim)">7 Feb — bank narration itself says "CAR BUMPER REPAIR", recategorized from Miscellaneous to Transport</div>
+          <div class="actions"><button class="btn">Confirm</button><button class="btn ghost">Undo</button></div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="screen" id="settings">
-    <div class="card">
-      <h2>Connected accounts</h2>
-      <div class="toggle-row"><span>HDFC Savings</span><div class="switch on"></div></div>
-      <div class="toggle-row"><span>HDFC/CRED Credit Card</span><div class="switch on"></div></div>
-      <div class="toggle-row"><span>Groww</span><div class="switch"></div></div>
-      <div class="toggle-row"><span>Binance</span><div class="switch"></div></div>
+    <div class="screen" id="categories">
+      <div class="grid2">
+        <div class="card">
+          <h2>Categories</h2>
+          <table class="plain">
+            <tr><th>Name</th><th>Nature</th></tr>
+            <tr><td>Groceries</td><td><span class="pill">need</span></td></tr>
+            <tr><td>Food &amp; Dining</td><td><span class="pill">want</span></td></tr>
+            <tr><td>Habit Spending</td><td><span class="pill conf-med">habit</span></td></tr>
+            <tr><td>Investments</td><td><span class="pill conf-high">investment</span></td></tr>
+            <tr><td>Lending &amp; Borrowing</td><td><span class="pill">transfer</span></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Habit subtypes</h2>
+          <div class="row-flex" style="margin-bottom:12px;flex-wrap:wrap;gap:6px;justify-content:flex-start"><span class="pill">Daily Cafe</span><span class="pill">Vices (Paan)</span><span class="pill">Alcohol (Wine Shops)</span></div>
+          <div class="row-flex"><input placeholder="Add subtype…" style="flex:1"><button class="btn">Add</button></div>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h2>Alerts</h2>
-      <div class="toggle-row"><span>Monthly narrative report</span><div class="switch on"></div></div>
-      <div class="toggle-row"><span>Habit-spend anomaly alert</span><div class="switch on"></div></div>
-      <div class="toggle-row"><span>Weekly digest via Telegram</span><div class="switch"></div></div>
+
+    <div class="screen" id="lending">
+      <div class="card">
+        <h2>Family &amp; lending (from statement)</h2>
+        <table>
+          <tr><th>Person</th><th>Lent</th><th>Repaid</th><th>Net Gap</th></tr>
+          <tr><td>Gurkirpal Singh</td><td>₹1.7L</td><td>—</td><td><span class="pill conf-med">college fees, not a loan</span></td></tr>
+          <tr><td>Jasbir Kaur</td><td>₹2,30,000</td><td>—</td><td><span class="pill conf-med">family, not a loan</span></td></tr>
+          <tr><td>Aditi Yadav</td><td>₹61,975</td><td>—</td><td><span class="pill conf-med">Dubai trip for parents, not a loan</span></td></tr>
+          <tr><td>Gaurav Chahal</td><td>₹79,570</td><td>₹15,000</td><td><span class="pill conf-low">₹64,570 outstanding</span></td></tr>
+          <tr><td>Nitin Shivankit</td><td>₹39,999</td><td>₹0</td><td><span class="pill conf-low">₹39,999 outstanding</span></td></tr>
+          <tr><td>Sunny Bose</td><td>₹20,000</td><td>₹5,000</td><td><span class="pill conf-med">₹15,000 outstanding</span></td></tr>
+          <tr><td>Saurabh Singh</td><td>₹32,090</td><td>₹22,505</td><td><span class="pill conf-med">₹9,585 outstanding — narrowing</span></td></tr>
+          <tr><td>Samrendra Singh Sisodia</td><td>₹54,500</td><td>₹52,000</td><td><span class="pill conf-high">₹2,500 outstanding</span></td></tr>
+          <tr><td>Sumit Gaur</td><td>₹7,000</td><td>₹5,000</td><td><span class="pill conf-med">₹2,000 outstanding</span></td></tr>
+          <tr><td>Sumit Beniwal</td><td>₹1,500</td><td>₹0</td><td><span class="pill conf-low">₹1,500 outstanding — new, found this pass</span></td></tr>
+          <tr><td>Shubham Kumar Pandey</td><td>₹250</td><td>₹0</td><td><span class="pill conf-low">₹250 found — the ₹5K you remember is still missing</span></td></tr>
+        </table>
+        <div class="row-flex" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+          <span style="font-size:13px;font-weight:600">Total real gap (excl. family)</span>
+          <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;color:var(--amber)">₹1,35,404</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.55">Gaurav Chahal's ₹15,000 repayment (Aug 3) and the full-year PhonePe export corrected a chunk of this pass — Samrendra's ₹49,000 return is now bank-confirmed (no longer flagged unverified). Rahul Yadav (₹12,912 net, poker) is deliberately not in this table — it's gambling, not lending.</div>
+        <div style="font-size:11.5px;color:var(--dim);margin-top:8px;line-height:1.55">Fully reconciled across bank (3 statements, Jun'25–Oct'26) + PhonePe, with accounts cross-checked to avoid double counting.</div>
+      </div>
+      <div class="card">
+        <h2>Your own account</h2>
+        <div style="font-size:12.5px;color:var(--dim);line-height:1.65">GPay linked to this account shows ₹36,373.55 spent Mar–Aug 2026: ₹7,000 to Mutual Funds ICCL (via SBI — so investing is happening here, just not visible in HDFC), Redbus/IRCTC travel ₹9,788, Amazon Pay ₹2,829, Jeevansathi ₹5,437, plus small paan-shop vendors. ₹3.14L of the ₹3.5L moved here is still untraced beyond this window.</div>
+      </div>
     </div>
-  </div>
+
+    <div class="screen" id="income">
+      <div class="grid2">
+        <div class="card">
+          <h2>Income sources</h2>
+          <table class="plain">
+            <tr><th>Source</th><th>Amount</th><th>Date</th><th>Recurring</th></tr>
+            <tr><td>Salary — TCS (Oct)</td><td class="income">₹1,77,187</td><td>31 Oct</td><td>Yes</td></tr>
+            <tr><td>Salary — TCS (Sep)</td><td class="income">₹1,81,430</td><td>30 Sep</td><td>Yes</td></tr>
+            <tr><td>Salary — TCS (Aug)</td><td class="income">₹1,32,915</td><td>1 Aug</td><td>Yes</td></tr>
+            <tr><td>Salary — TCS (Jun)</td><td class="income">₹1,51,994</td><td>30 Jun</td><td>Yes</td></tr>
+            <tr><td>Motilal Oswal MF credit</td><td class="income">₹61,164</td><td>6 Feb</td><td>No</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h2>Investments — full reconciliation (Jun'25–Oct'26)</h2>
+          <table class="plain">
+            <tr><th>Vehicle</th><th>In</th><th>Out</th><th>Net</th></tr>
+            <tr><td>Fixed Deposits (7 opened)</td><td>₹66,054 matured/closed early</td><td>₹2,70,000</td><td><span class="pill">₹2,03,946 still locked</span></td></tr>
+            <tr><td>BTC (Tushar, Khebade + "rahulrahul1ptyes")</td><td>₹0</td><td>₹1,45,000</td><td><span class="pill">₹1,45,000</span></td></tr>
+            <tr><td>Groww</td><td>₹5,000 (one reversed payment)</td><td>₹43,000</td><td><span class="pill">₹38,000</span></td></tr>
+            <tr><td>Angel One Securities</td><td>₹68</td><td>₹11,800</td><td><span class="pill">₹11,732</span></td></tr>
+            <tr><td>Mutual Funds (Motilal Oswal)</td><td>₹75,197 redeemed</td><td>₹25,000</td><td><span class="pill conf-med">-₹50,197 — net withdrawn</span></td></tr>
+          </table>
+          <div class="row-flex" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+            <span style="font-size:13px;font-weight:600">Total net invested</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;color:var(--blue)">₹3,48,481</span>
+          </div>
+          <div style="font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.55">This pass's full-year PhonePe export added ₹50,000 more BTC — ₹10,000 via Tushar Agarwal (Feb 14) and ₹40,000 via "rahulrahul1ptyes" (Nov 14), both on the SBI-linked account the bank statement never saw.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="insights">
+      <div class="card">
+        <h2>Ask about your money</h2>
+        <div class="chat-log">
+          <div class="msg user">How much am I actually leaking to habits?</div>
+          <div class="msg ai">₹88,354 over 18 months — about ₹4,909/month, across café, paan and wine/liquor shops. It's steady every month unlike your other spend categories, and jumped this pass once the full-year PhonePe export surfaced liquor spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) that the bank statement never showed.</div>
+        </div>
+        <div class="chat-input"><input placeholder="Ask a question…"><button class="btn">Ask</button></div>
+      </div>
+    </div>
+
+    <div class="screen" id="report">
+      <div class="row-flex" style="margin-bottom:16px;gap:10px">
+        <button class="btn report-toggle active" data-r="safe">🧊 Safe Report</button>
+        <button class="btn ghost report-toggle" data-r="real">🔥 Real Deal</button>
+      </div>
+
+      <div class="report-view" data-view="safe">
+        <div class="card">
+          <h2>Yearly overview</h2>
+          <div style="font-size:12.5px;color:var(--dim);margin-bottom:14px;line-height:1.5">Rough, annualized from 17 months of statements (Jun'25–Oct'26) — the version you'd actually show someone.</div>
+          <div class="stat-row">
+            <div class="stat"><div class="stat-label">Annual income</div><div class="stat-value income">~₹19.8L</div></div>
+            <div class="stat"><div class="stat-label">Living expenses</div><div class="stat-value expense">~₹11.1L</div></div>
+            <div class="stat"><div class="stat-label">Invested</div><div class="stat-value invest">~₹3.1L</div></div>
+          </div>
+          <div class="row-flex" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+            <span style="font-size:13px;font-weight:600">Implied annual savings</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;color:var(--teal)">~₹5.6L (~28%)</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Where it roughly goes</h2>
+          <div class="bar-row"><div>Living &amp; family</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-amount">₹11.1L</div></div>
+          <div class="bar-row"><div>Investments</div><div class="bar-track"><div class="bar-fill i" style="width:28%"></div></div><div class="bar-amount">₹3.1L</div></div>
+          <div class="bar-row"><div>Savings buffer</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-amount">₹5.6L</div></div>
+          <div style="font-size:11.5px;color:var(--dim);margin-top:10px;line-height:1.5">About 28% of take-home is going into savings or investments every year — a healthy number. Figures are rounded and smoothed across the year, not a line-by-line audit.</div>
+        </div>
+      </div>
+
+      <div class="report-view" data-view="real" style="display:none">
+        <div class="card">
+          <h2>17-month summary (Jun'25–Oct'26) — fully reconciled</h2>
+          <p class="narrative">Built from all three bank statements plus a full year of PhonePe (28 Nov 2025 – 27 Nov 2026), replacing anything that drifted across earlier incremental updates. No statement covers Jul 2026 — that's a genuine gap, not a zero month — and Nov 2026 is PhonePe-only so far, no bank/card statement yet. <b>Lending gap: ₹1,35,404</b> across 8 people, led by Gaurav Chahal (₹64,570 — his ₹15,000 Aug repayment had been missed) and Nitin Shivankit (₹39,999, still unconfirmed). Samrendra's ₹49,000 is now bank-confirmed repaid same day, no longer flagged unverified. Separately, <b>₹12,912 went to poker</b> via Rahul Yadav (Jul–Oct) — not a loan, kept out of the lending total. <b>Total net invested: ₹3,48,481</b> — ₹2,03,946 in FDs, ₹1,45,000 into BTC (up ₹50,000 this pass), ₹38,000 via Groww, ₹11,732 via Angel One, offset by a ₹50,197 net mutual fund withdrawal. Habit spending totals <b>₹88,354 over 18 months</b> (~₹4,909/month) — up sharply this pass once liquor-store spend (Wine Metro & Bar, Nine Avenue Luxury Liquor, The Liquor Story) surfaced from PhonePe. Family support: ₹2,30,000 to Jasbir Kaur and ₹61,975 to Aditi Yadav (Dubai trip for her parents) — real money, deliberately excluded from the "gap." October ran <b>-13%</b> on savings — family support (₹50K), a new Saurabh Singh loan, and EMI landed in the same month, not a sustained trend. Still pending your confirmation: Pravin Thorat (₹51,292), Bimla Chahar (₹11,255) and Ashvani Kumar (₹10,000) — flagged in Review.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="upload">
+      <div class="card">
+        <h2>Upload a statement</h2>
+        <div class="upload-zone">Drop a PDF here or tap to choose a file<br>HDFC savings or credit card statement</div>
+      </div>
+    </div>
+
+    <div class="screen" id="settings">
+      <div class="grid2">
+        <div class="card">
+          <h2>Connected accounts</h2>
+          <div class="toggle-row"><span>HDFC Savings</span><div class="switch on"></div></div>
+          <div class="toggle-row"><span>HDFC/CRED Credit Card</span><div class="switch on"></div></div>
+          <div class="toggle-row"><span>Groww</span><div class="switch"></div></div>
+          <div class="toggle-row"><span>Binance</span><div class="switch"></div></div>
+        </div>
+        <div class="card">
+          <h2>Alerts</h2>
+          <div class="toggle-row"><span>Monthly narrative report</span><div class="switch on"></div></div>
+          <div class="toggle-row"><span>Habit-spend anomaly alert</span><div class="switch on"></div></div>
+          <div class="toggle-row"><span>Weekly digest via Telegram</span><div class="switch"></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 <script>
 document.getElementById('tabs').addEventListener('click',function(e){
@@ -374,6 +493,7 @@ document.getElementById('tabs').addEventListener('click',function(e){
   document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active')});
   t.classList.add('active');
   document.getElementById(t.dataset.s).classList.add('active');
+  var h1 = document.querySelector('.topbar h1'); if(h1) h1.textContent = t.textContent.trim();
 });
 document.querySelectorAll('.switch').forEach(function(s){
   s.addEventListener('click',function(){s.classList.toggle('on')});
