@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#12151A; --bg2:#0D0F13;
+  --bg:#12151A; --bg2:#0D0F13; --bg-glow:#182029; --on-accent:#0B1210;
   --panel:#1A1E25; --panel2:#20252E; --panel3:#262C37;
   --line:#2A313C; --line-soft:#232931;
   --text:#ECEAE5; --dim:#8D94A1; --dim2:#6A7079;
@@ -15,17 +15,33 @@
   --amber:#E0AC4C; --amber-soft:#2E2518;
   --brick:#D4717A; --brick-soft:#2E1B1E;
   --blue:#6FC0E6; --blue-soft:#182733;
+  --amber-border:#3A2E1C;
   --radius-lg:16px; --radius-md:12px; --radius-sm:8px;
   --shadow:0 1px 2px rgba(0,0,0,.2), 0 8px 24px -8px rgba(0,0,0,.35);
   --sidenav-w:232px;
+  color-scheme:dark;
+}
+html[data-theme="light"]{
+  --bg:#F6F4EF; --bg2:#FFFFFF; --bg-glow:#EAF4EF; --on-accent:#FFFFFF;
+  --panel:#FFFFFF; --panel2:#F3F1EB; --panel3:#E9E5DC;
+  --line:#E2DDD1; --line-soft:#EBE7DE;
+  --text:#211F1C; --dim:#6E6A62; --dim2:#8E897F;
+  --teal:#2F8E6F; --teal-soft:#E2F2EA;
+  --amber:#AD7A1F; --amber-soft:#FAF0D9;
+  --brick:#BD4F58; --brick-soft:#FAEAEA;
+  --blue:#2E80A8; --blue-soft:#E7F2F8;
+  --amber-border:#EAD9AE;
+  --shadow:0 1px 2px rgba(30,25,15,.05), 0 8px 20px -10px rgba(30,25,15,.12);
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:radial-gradient(1200px 600px at 100% -10%, #182029 0%, var(--bg) 55%);color:var(--text);
+html,body{transition:background-color .25s ease,color .25s ease}
+body{margin:0;background:radial-gradient(1200px 600px at 100% -10%, var(--bg-glow) 0%, var(--bg) 55%);color:var(--text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);min-height:100vh}
 a{color:inherit}
-::selection{background:var(--teal);color:#0B0D10}
+::selection{background:var(--teal);color:var(--on-accent)}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:8px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -84,7 +100,7 @@ h2 .pill{font-weight:500}
 .stat-value{font-size:18.5px;font-weight:700;letter-spacing:-.2px}
 .income{color:var(--teal)}.expense{color:var(--brick)}.invest{color:var(--blue)}.habit{color:var(--amber)}
 
-.leak{background:linear-gradient(135deg,var(--amber-soft),var(--panel) 70%);border:1px solid #3A2E1C;
+.leak{background:linear-gradient(135deg,var(--amber-soft),var(--panel) 70%);border:1px solid var(--amber-border);
   border-radius:var(--radius-lg);padding:17px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;box-shadow:var(--shadow)}
 .leak .t{font-size:13px;color:var(--amber);font-weight:600;display:flex;align-items:center;gap:7px}
 .leak .d{font-size:12px;color:var(--dim);max-width:260px;margin-top:5px;line-height:1.5}
@@ -117,7 +133,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
 .pill.conf-med{color:var(--amber);background:var(--amber-soft)}
 .pill.conf-high{color:var(--teal);background:var(--teal-soft)}
 
-.btn{background:var(--teal);color:#0B1210;border:none;border-radius:var(--radius-sm);padding:8px 14px;font-size:12.5px;
+.btn{background:var(--teal);color:var(--on-accent);border:none;border-radius:var(--radius-sm);padding:8px 14px;font-size:12.5px;
   font-weight:600;cursor:pointer;transition:filter .15s,transform .1s}
 .btn:hover{filter:brightness(1.08)}
 .btn:active{transform:scale(.97)}
@@ -133,7 +149,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
 
 .chat-log{display:flex;flex-direction:column;gap:11px;margin-bottom:14px}
 .msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.55}
-.msg.user{align-self:flex-end;background:var(--teal);color:#0B1210;border-bottom-right-radius:4px}
+.msg.user{align-self:flex-end;background:var(--teal);color:var(--on-accent);border-bottom-right-radius:4px}
 .msg.ai{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:4px}
 .chat-input{display:flex;gap:8px}
 .chat-input input{flex:1}
@@ -147,13 +163,23 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
 .switch{width:38px;height:21px;background:var(--panel3);border-radius:20px;position:relative;cursor:pointer;flex:0 0 auto}
 .switch.on{background:var(--teal)}
 .switch::after{content:'';position:absolute;width:17px;height:17px;background:var(--text);border-radius:50%;top:2px;left:2px;transition:.2s}
-.switch.on::after{left:19px;background:#0B1210}
+.switch.on::after{left:19px;background:var(--on-accent)}
 
 .narrative{font-size:13.5px;line-height:1.75;color:var(--text)}
 .narrative b{color:var(--amber);font-weight:600}
 .empty{font-size:12px;color:var(--dim);text-align:center;padding:24px 0}
 
 .report-toggle{flex:1;display:flex;align-items:center;justify-content:center;gap:7px}
+
+.theme-toggle{position:fixed;top:16px;right:18px;z-index:40;width:38px;height:38px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:var(--shadow);color:var(--amber);transition:background .15s,transform .15s}
+.theme-toggle:hover{transform:scale(1.06)}
+.theme-toggle svg{width:18px;height:18px}
+.theme-toggle .icon-moon{display:none;color:var(--blue)}
+html[data-theme="light"] .theme-toggle .icon-sun{display:none}
+html[data-theme="light"] .theme-toggle .icon-moon{display:block}
+@media (max-width:900px){.theme-toggle{top:12px;right:14px;width:34px;height:34px}.theme-toggle svg{width:16px;height:16px}}
 
 @media (max-width:900px){
   .app{display:block}
@@ -162,8 +188,8 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
   .sidenav::-webkit-scrollbar{display:none}
   .brand{display:none}
   .tab{flex:0 0 auto;padding:8px 13px;border-radius:20px;background:var(--panel)}
-  .tab.active{background:var(--teal);color:#0B1210;border-color:var(--teal)}
-  .tab.active svg{color:#0B1210}
+  .tab.active{background:var(--teal);color:var(--on-accent);border-color:var(--teal)}
+  .tab.active svg{color:var(--on-accent)}
   .nav-footer{display:none}
   .content{padding:18px 16px 90px}
   .grid2{grid-template-columns:1fr}
@@ -172,6 +198,10 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle day/night theme">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+</button>
 <div class="app">
   <nav class="sidenav" id="tabs">
     <div class="brand"><div class="mark">💸</div><div><div class="name">Money Trace</div><div class="sub">Personal finance, reconciled</div></div></div>
@@ -487,6 +517,23 @@ select:focus,input:focus,textarea:focus{border-color:var(--teal)}
   </main>
 </div>
 <script>
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('mt-theme'); } catch(e){}
+  if(!saved){
+    saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+  if(saved === 'light') document.documentElement.setAttribute('data-theme','light');
+  var toggle = document.getElementById('themeToggle');
+  if(toggle){
+    toggle.addEventListener('click', function(){
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if(isLight){ document.documentElement.removeAttribute('data-theme'); }
+      else { document.documentElement.setAttribute('data-theme','light'); }
+      try { localStorage.setItem('mt-theme', isLight ? 'dark' : 'light'); } catch(e){}
+    });
+  }
+})();
 document.getElementById('tabs').addEventListener('click',function(e){
   var t=e.target.closest('.tab'); if(!t) return;
   document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
