@@ -75,6 +75,8 @@ RULES = [
     ("insurance",     "payee",     r"^DIGIT$|POLICYBAZAAR|^PAID - INSURANCE"),
     ("education",     "payee",     r"^NAMASTEDEV"),
     ("bill_other",    "narration", r"GOOGLEBBPSUTILITY@"),
+    # HDFC debit card, international: Australian Dept of Home Affairs online = visa application charge
+    ("visa_fee",      "narration", r"^POS \S+ HOME AFFAIRS ONL"),
     ("cash",          "narration", r"^(ATW|NWD|EAW)-"),
     ("fx_fees",       "narration", r"^\.DC INTL POS TXN MARKUP|^RFX "),
     # PhonePe wallet top-ups: what the wallet bought is not itemised anywhere
@@ -89,7 +91,7 @@ BUCKET = {
     "card_bill": "living", "bill_phone": "living", "bill_power": "living", "bill_gas": "living",
     "bill_carwash": "living", "subscription": "living", "quick_commerce": "living", "groceries": "living",
     "food": "living", "shopping": "living", "car": "living", "insurance": "living", "education": "living",
-    "bill_other": "living", "cash": "living", "fx_fees": "living", "wallet_topup": "living", "travel": "living", "transport": "living", "health": "living",
+    "bill_other": "living", "cash": "living", "visa_fee": "living", "fx_fees": "living", "wallet_topup": "living", "travel": "living", "transport": "living", "health": "living",
     "unreviewed": "living",
 }
 
