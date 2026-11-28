@@ -91,7 +91,9 @@ BUCKET = {
     "card_bill": "living", "bill_phone": "living", "bill_power": "living", "bill_gas": "living",
     "bill_carwash": "living", "subscription": "living", "quick_commerce": "living", "groceries": "living",
     "food": "living", "shopping": "living", "car": "living", "insurance": "living", "education": "living",
-    "bill_other": "living", "cash": "living", "visa_fee": "living", "fx_fees": "living", "wallet_topup": "living", "travel": "living", "transport": "living", "health": "living",
+    "bill_other": "living", "cash": "living", "visa_fee": "living",
+    # money paid on someone else's behalf with their money: excluded from income and spending
+    "passthrough": "self", "fx_fees": "living", "wallet_topup": "living", "travel": "living", "transport": "living", "health": "living",
     "unreviewed": "living",
 }
 

@@ -52,6 +52,9 @@ Lessons the pipeline encodes:
   Bimla Chahar ₹11,255 = sister's trip, Family per user; "GPAY-CREDITCARD@" = card bill; "CAR BUMPER REPAIR"). Decisions the user
   confirmed earlier (old Review/Lending tabs) are in rules.py or data/overrides.json: …2499 ₹39,999 =
   lending to Nitin Shivankit; Sumit Beniwal lending is only the ₹1,500 SBI payment on 4 Nov '26.
+  "POS … HOME AFFAIRS ONL" ₹1,19,625 (18 Sep '25) = Gurkirpal's Australian visa fee, paid on the user's
+  HDFC debit card with ₹1,20,000 Gurkirpal sent (₹49K + ₹48K on 18 Sep, ₹23K on 20 Sep): category
+  `passthrough` (excluded both ways). The ₹4,941 HDFC forex markup on 4 Oct '25 = Family.
 - Month-end liquid = balance on the last HDFC row of the month in file order. The old numbers were
   wrong for some months (Apr '26 showed ₹56,698; real ₹1,93,955).
 
