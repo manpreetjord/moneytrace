@@ -43,6 +43,15 @@ Full detail, including the "Safe Report" (a rounded version with habit spend
 and friends' names stripped out — built for showing to family) lives in the
 Report tab's two-way toggle.
 
+## Overview tab (landing page)
+Month-wise and FY-wise (Apr-Mar) view of income received, remaining, living, habit, FD,
+invested, family, lending, liquid and quick commerce. Data is a `D` array inside the last
+`<script>` block of `index.html`, derived from the same bank categories as the Monthly tab
+(salary = income; Liquid = HDFC month-end balance; Aditi Yadav Feb'26 moved from Misc to Family).
+Quick commerce = Blinkit/Zepto/Grofers/Swiggy Instamart only, summed over bank + PhonePe/super.money
+on XX2953 (plain "Swiggy" excluded: can't tell food from Instamart). When new statements land,
+update `D` and the Monthly table together from source.
+
 ## Data sources discovered so far — and the dedup method
 The user pays through **four different rails** that all eventually settle to
 one of two accounts (HDFC XX3937, SBI XX2953): the HDFC bank statement itself,
