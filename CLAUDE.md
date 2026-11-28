@@ -52,6 +52,9 @@ Quick commerce = Blinkit/Zepto/Grofers/Swiggy Instamart only, summed over bank +
 on XX2953 (plain "Swiggy" excluded: can't tell food from Instamart). When new statements land,
 Subscriptions (`sub` in `D`) = Netflix + Apple Media Services (XX2953 via PhonePe), Google Play autopay
 (HDFC) and Claude.ai (card), counted by merchant name; the apps behind Google Play/Apple are unidentified.
+Bills (`bill` = `ph`+`el`+`gs`+`cw` in `D`) = Airtel phone/broadband, electricity (PhonePe bill-pay), HP Gas/Rudra Gas, car wash,
+by merchant name across HDFC + XX2953. Electricity Jun/Jul/Oct'25 is inferred from PhonePe BBPS rows in the bank statement.
+No payee named Jambulkar exists in any statement (asked the user); Jio Platforms ₹13,428 (27 Oct'26) not counted.
 When new statements land, update `D` and the Monthly table together from source.
 
 ## Data sources discovered so far — and the dedup method
