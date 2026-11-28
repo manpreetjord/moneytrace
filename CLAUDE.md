@@ -124,7 +124,8 @@ Rule that's been load-bearing every time a new statement shows up:
   block (`--teal`/`--amber`/`--brick`/`--blue` as the semantic accent colors).
   Sidebar nav on desktop, collapses to a horizontal pill bar under 900px.
 - **Deploys a placeholder only.** Push to `master` → GitHub Actions publishes the
-  blank placeholder to Pages (see Current state). (Note: the Pages deploy step has been flaky once or
+  blank placeholder to Pages (see Current state). Build and deploy are separate jobs, which fixes the old
+  transient "No artifacts named github-pages" failure. (Note: the Pages deploy step has been flaky once or
   twice with a transient "no artifact found" error from GitHub's side — if a
   run fails on `deploy-pages` right after a successful `upload-artifact`,
   just re-run it, don't assume the workflow itself is broken.)
