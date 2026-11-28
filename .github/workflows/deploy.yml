@@ -24,12 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build site (strip anything that shouldn't be public)
+      - name: Build placeholder site (dashboard is never published)
         run: |
+          # The dashboard holds personal financial data, and Pages on a personal
+          # account is public even for a private repo, so only a placeholder is
+          # published. View the real dashboard via the private Claude artifact
+          # or by opening index.html locally.
           mkdir -p _site
-          cp index.html _site/index.html
-          # Never publish real statement files even if one slips past .gitignore
-          find _site -name "*.xls" -o -name "*.xlsx" -o -name "*.csv" -o -name "*.pdf" | xargs -r rm -f
+          printf '%s\n' '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>Not available</title></head><body style="font-family:sans-serif;padding:40px;color:#555">This page is not available.</body></html>' > _site/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

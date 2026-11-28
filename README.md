@@ -3,8 +3,9 @@
 A finance tracker built to answer one question: where is the money actually
 going, and what's habit-driven waste vs. real spend vs. real investment.
 
-**Live dashboard:** https://manpreetjord.github.io/moneytrace/ (private repo —
-sign in to GitHub to view)
+**Viewing:** open `index.html` locally or use the private Claude artifact. The
+GitHub Pages URL intentionally serves only a blank placeholder: Pages from a
+personal account is public even for a private repo.
 
 ## Contents
 - `index.html` — the full dashboard, single file, no build step. 11 screens:
@@ -19,8 +20,8 @@ sign in to GitHub to view)
 - `schema.sql` — a planned Supabase/Postgres schema (not yet wired up)
 - `parse-statement.md` — a planned Claude API prompt for automated statement
   parsing (not yet wired up)
-- `.github/workflows/deploy.yml` — auto-deploys `index.html` to GitHub Pages
-  on every push to `master`
+- `.github/workflows/deploy.yml` — publishes a blank placeholder to GitHub
+  Pages (the dashboard itself is never published there)
 
 ## Status
 Fully manual reconciliation pipeline: statements get uploaded in a Claude

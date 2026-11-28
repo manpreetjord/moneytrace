@@ -17,9 +17,12 @@ be traced to a statement line, it goes in the Review queue flagged as unconfirme
 directly in a browser. It's published two places:
 1. A Claude artifact (ask the user if they still want that kept in sync, or if
    GitHub Pages has fully replaced it)
-2. **GitHub Pages**, auto-deployed by `.github/workflows/deploy.yml` on every
-   push to `master`. Live at https://manpreetjord.github.io/moneytrace/
-   (private repo, so viewers need GitHub access to it).
+2. **GitHub Pages is deliberately NOT serving the dashboard.** Pages on a personal
+   account is public on the internet even when the repo is private (private Pages
+   needs GitHub Enterprise Cloud). `deploy.yml` publishes only a blank
+   "not available" placeholder. Never point it back at `index.html` unless the
+   published file is a redacted build with no names or amounts. View the real
+   dashboard via the private Claude artifact or by opening `index.html` locally.
 
 The repo has no backend. `schema.sql` (Supabase/Postgres) and `parse-statement.md`
 (a Claude API prompt for parsing statements) describe a planned pipeline that was
@@ -120,8 +123,8 @@ Rule that's been load-bearing every time a new statement shows up:
   localStorage), single CSS custom-property system in `index.html`'s `<style>`
   block (`--teal`/`--amber`/`--brick`/`--blue` as the semantic accent colors).
   Sidebar nav on desktop, collapses to a horizontal pill bar under 900px.
-- **Deploys itself.** Push to `master` → GitHub Actions builds and deploys to
-  Pages automatically. (Note: the Pages deploy step has been flaky once or
+- **Deploys a placeholder only.** Push to `master` → GitHub Actions publishes the
+  blank placeholder to Pages (see Current state). (Note: the Pages deploy step has been flaky once or
   twice with a transient "no artifact found" error from GitHub's side — if a
   run fails on `deploy-pages` right after a successful `upload-artifact`,
   just re-run it, don't assume the workflow itself is broken.)
