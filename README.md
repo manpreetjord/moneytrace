@@ -17,6 +17,9 @@ personal account is public even for a private repo.
   (data sources, dedup methodology, known people, current numbers, house
   rules). **Read this first** before making changes — it has everything that
   would otherwise need re-explaining.
+- `pipeline/` — `ingest.py` (statements -> ledger, UPI-ref dedup), `rules.py` (categories),
+  `build.py` (ledger -> Overview/Monthly data in `index.html` + review queue). Raw statements and the
+  ledger live in `data/`, which is gitignored.
 - `schema.sql` — a planned Supabase/Postgres schema (not yet wired up)
 - `parse-statement.md` — a planned Claude API prompt for automated statement
   parsing (not yet wired up)

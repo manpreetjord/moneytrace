@@ -24,13 +24,38 @@ directly in a browser. It's published two places:
    published file is a redacted build with no names or amounts. View the real
    dashboard via the private Claude artifact or by opening `index.html` locally.
 
-The repo has no backend. `schema.sql` (Supabase/Postgres) and `parse-statement.md`
-(a Claude API prompt for parsing statements) describe a planned pipeline that was
-never built — all reconciliation so far has been done manually in-session,
-one statement upload at a time, with the results hand-written into `index.html`.
-Don't assume that pipeline exists; it doesn't yet.
+## The pipeline (use this, don't hand-edit numbers)
+```
+data/raw/            statements, named by source prefix (gitignored, never commit)
+pipeline/ingest.py   parse every raw file -> data/ledger.json, dedup by UPI ref
+pipeline/rules.py    ordered category rules matched on the PAYEE name (edit to recategorise)
+data/overrides.json  hand-confirmed categories no rule covers, keyed date|amount|dir|narration
+pipeline/build.py    ledger -> Overview/Monthly data, injected between /*GEN:D*/ markers in
+                     index.html, plus data/review.csv (the unreviewed-payee queue)
+```
+New statement: drop it in `data/raw/` with the right prefix (hdfc_, phonepe_, gpay_, supermoney_),
+run `python3 pipeline/ingest.py && python3 pipeline/build.py`, check the printed dedup report.
+Raw files and ledger live only on the machine that has them: in a fresh container `data/` is empty,
+so ask the user to re-upload statements before rebuilding.
+Overview + Monthly tabs are generated. **Still hand-written (stale until migrated):** Dashboard
+top cards, Transactions, Review, Categories, Lending, Income, Insights, Report (Safe/Real) tabs and
+the "Savings held now" card. `schema.sql` / `parse-statement.md` are the old, unbuilt Supabase plan.
 
-## Current reconciled headline numbers (as of the last pass — verify before quoting)
+Lessons the pipeline encodes:
+- Match category rules on the payee name, never the whole narration. The old hand-built version
+  matched "AIRTEL" inside Razorpay's RXAIRTEL handle and "CRED" in "PAID VIA CRED", which misfiled
+  ~₹1L (habit merchants under EMI/Loans, Wine Metro under Transport, Trent under Rent).
+- UPI ref (12 digits in the HDFC narration = PhonePe UTR = GPay "UPI Transaction ID") gives exact
+  dedup; every PhonePe/GPay XX3937 row matched a bank row except July '26 (no HDFC statement).
+- Month-end liquid = balance on the last HDFC row of the month in file order. The old numbers were
+  wrong for some months (Apr '26 showed ₹56,698; real ₹1,93,955).
+
+## Headline numbers (regenerate with build.py; Jun'25-Oct'26, Jul'26 gap)
+From the pipeline: income ₹23,53,062; saved ₹4,09,094 (17%) = cash left -₹72,706 + FD ₹2,70,000
++ invested ₹2,11,800; living ₹12,62,668 (incl. ₹1,67,745 SBI-side, ₹7.3L still unreviewed);
+habit ₹85,652; family ₹4,11,975; lending gross ₹1,83,673. Older hand-computed figures below.
+
+### Older hand-computed figures (from before the pipeline; verify before quoting)
 - **Habit spending**: ₹99,765 over 18 months (Jun'25–Nov'26), ~₹5,542/month
 - **Total invested**: ₹3,68,481 (FD ₹2,03,946, BTC ₹1,45,000, Groww ₹38,000,
   Angel One ₹11,732, Mutual Funds NCL +₹20,000, Motilal Oswal MF -₹50,197 net withdrawn)
@@ -111,6 +136,7 @@ Rule that's been load-bearing every time a new statement shows up:
   to the Review queue, not into a category.
 - **Real statements only.** Don't estimate or average to fill a gap month —
   say it's a gap.
+- **Never hand-edit a generated number.** Change `rules.py` / `overrides.json` and rerun build.py.
 - **One clean recompute beats another patch.** This dashboard drifted badly
   once from incremental one-line edits (numbers went out of sync with each
   other) and the user called it out hard. When new data changes several
