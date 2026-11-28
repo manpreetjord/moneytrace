@@ -50,7 +50,9 @@ invested, family, lending, liquid and quick commerce. Data is a `D` array inside
 (salary = income; Liquid = HDFC month-end balance; Aditi Yadav Feb'26 moved from Misc to Family).
 Quick commerce = Blinkit/Zepto/Grofers/Swiggy Instamart only, summed over bank + PhonePe/super.money
 on XX2953 (plain "Swiggy" excluded: can't tell food from Instamart). When new statements land,
-update `D` and the Monthly table together from source.
+Subscriptions (`sub` in `D`) = Netflix + Apple Media Services (XX2953 via PhonePe), Google Play autopay
+(HDFC) and Claude.ai (card), counted by merchant name; the apps behind Google Play/Apple are unidentified.
+When new statements land, update `D` and the Monthly table together from source.
 
 ## Data sources discovered so far — and the dedup method
 The user pays through **four different rails** that all eventually settle to
