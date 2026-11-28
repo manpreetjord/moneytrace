@@ -55,6 +55,11 @@ Subscriptions (`sub` in `D`) = Netflix + Apple Media Services (XX2953 via PhoneP
 Bills (`bill` = `ph`+`el`+`gs`+`cw` in `D`) = Airtel phone/broadband, electricity (PhonePe bill-pay), HP Gas/Rudra Gas, car wash,
 by merchant name across HDFC + XX2953. Electricity Jun/Jul/Oct'25 is inferred from PhonePe BBPS rows in the bank statement.
 No payee named Jambulkar exists in any statement (asked the user); Jio Platforms ₹13,428 (27 Oct'26) not counted.
+Saved = Remaining + FD + Invested (FD and investments count as savings, not outflows).
+"Savings held now" card (static HTML) = HDFC liquid ₹3,47,260 (Oct'26) + FD ₹2,03,946 + Binance BTC ₹1,45,000 at cost
++ stocks/MF ₹69,732 at cost = ₹7,65,938. Groww tax reports (client 8316417572) are realised P&L only, no holdings:
+FY25-26 stocks -₹31,448, F&O -₹839, MF -₹2,877, charges ₹2,134, dividends ₹2,246. Need a Groww holdings
+statement + Binance wallet value for market value; SBI XX2953 balance unknown.
 When new statements land, update `D` and the Monthly table together from source.
 
 ## Data sources discovered so far — and the dedup method

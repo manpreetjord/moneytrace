@@ -228,10 +228,29 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block}
         <div class="hero-label" id="ovLabel">Total income received</div>
         <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end">
           <div><div class="hero-number" id="ovIncome">-</div><div class="hero-sub" id="ovIncomeSub" style="margin-top:6px"></div></div>
-          <div><div class="stat-label">Remaining (unspent)</div><div class="hero-number" id="ovRemain" style="font-size:34px">-</div><div class="hero-sub" id="ovRemainSub" style="margin-top:6px"></div></div>
+          <div><div class="stat-label">Total saved (cash left + FD + invested)</div><div class="hero-number" id="ovRemain" style="font-size:34px">-</div><div class="hero-sub" id="ovRemainSub" style="margin-top:6px"></div></div>
         </div>
         <div id="ovBar" style="display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--panel3);margin:18px 0 8px"></div>
         <div id="ovLegend" style="display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--dim)"></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>Savings held now <span class="pill">liquid + FD + MF + stocks + BTC</span></h2>
+        <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px">
+          <div><div class="hero-number" style="color:var(--teal)">₹7,65,938</div><div class="hero-sub" style="margin-top:6px">Known balances plus money put in at cost. Market value not available yet.</div></div>
+        </div>
+        <table class="plain" style="margin-top:10px">
+          <tr><th>Bucket</th><th style="text-align:right">Amount</th><th>Basis</th></tr>
+          <tr><td>Liquid (HDFC XX3937)</td><td style="text-align:right">₹3,47,260</td><td style="color:var(--dim)">Actual balance, 31 Oct '26. SBI XX2953 balance not known, not included</td></tr>
+          <tr><td>Fixed deposits</td><td style="text-align:right">₹2,03,946</td><td style="color:var(--dim)">₹2.7L placed minus ₹66K broken early (Aug-Sep '25); interest not added</td></tr>
+          <tr><td>Binance BTC</td><td style="text-align:right">₹1,45,000</td><td style="color:var(--dim)">At cost (sum of BTC buys). Current value depends on BTC price</td></tr>
+          <tr><td>Stocks + MF (Groww, Angel One, NCL)</td><td style="text-align:right">₹69,732</td><td style="color:var(--dim)">At cost: Groww ₹38,000 + Angel One ₹11,732 + MF via NCL ₹20,000</td></tr>
+          <tr><td><b>Total</b></td><td style="text-align:right"><b>₹7,65,938</b></td><td></td></tr>
+        </table>
+        <div style="font-size:11.5px;color:var(--dim);margin-top:12px;line-height:1.6">
+          <b>Groww reports, FY 25-26 (realised):</b> stocks -₹31,448 (long term -₹21,409, short term -₹9,305, intraday -₹734), F&amp;O options -₹839, mutual funds -₹2,877 (Quant Small Cap sold Aug '25, Motilal Midcap sold Feb '26), charges ₹2,134. Dividends ₹2,246 (Apr '25 to Jul '26). Commodities: no trades. FY 26-27 mutual fund report: no redemptions yet.<br>
+          Still held as of the Jul '26 dividend report: SBI, HDFC Bank, Bank of Maharashtra, BSE, IDFC First, Jio Financial, Garden Reach. A Groww holdings statement and the Binance wallet value would turn the at-cost figures into current value.
+        </div>
       </div>
 
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;align-items:center">
@@ -249,9 +268,9 @@ html[data-theme="light"] .theme-toggle .icon-moon{display:block}
 
       <div class="card">
         <h2 id="ovTableTitle">Month by month</h2>
-        <div style="overflow-x:auto"><table id="ovTable" style="min-width:1080px"></table></div>
+        <div style="overflow-x:auto"><table id="ovTable" style="min-width:1150px"></table></div>
         <div style="font-size:11px;color:var(--dim);margin-top:12px;line-height:1.6">
-          <b>Income</b> = TCS salary credits. <b>Living</b> = normal costs (EMI, food, groceries, bills, shopping, transport, health, misc). <b>Habit</b> = café/paan/wine/liquor. <b>FD</b> = money put into fixed deposits that month (gross; premature FD redemptions of ₹66K in Aug-Sep '25 aren't netted here, net FD held is ₹2,03,946). <b>Invested</b> = BTC, Groww, Angel One, mutual funds. <b>Remaining</b> = income minus all of those, i.e. what was left unspent that month.<br>
+          <b>Income</b> = TCS salary credits. <b>Living</b> = normal costs (EMI, food, groceries, bills, shopping, transport, health, misc). <b>Habit</b> = café/paan/wine/liquor. <b>FD</b> = money put into fixed deposits that month (gross; premature FD redemptions of ₹66K in Aug-Sep '25 aren't netted here, net FD held is ₹2,03,946). <b>Invested</b> = BTC, Groww, Angel One, mutual funds. <b>Remaining</b> = income minus all of those, i.e. cash left unspent that month. <b>Saved</b> = Remaining + FD + Invested: everything not spent on living, habit, family or lending.<br>
           <b>Liquid</b> = actual HDFC balance at month-end, not a calculation, so it won't equal the running total of Remaining: it started at ₹1.01L in Jun '25, includes non-salary credits, has no statement for Jul '26, and excludes money moved to the SBI account (self-transfers).<br>
           <b>Lending</b> here is gross money lent out in the period; the Lending tab shows the net gap after repayments (₹1,35,404). <b>Family</b> includes Jasbir Kaur, Gurkirpal Singh and Aditi Yadav.<br>
           <b>Quick commerce</b> (Blinkit, Zepto, Grofers, Swiggy Instamart) is a memo line summed across bank + PhonePe/super.money on SBI. The bank part is already inside Living, the SBI part isn't. Plain "Swiggy" payments are left out because they can't be told apart from food delivery.<br>
@@ -687,18 +706,18 @@ document.querySelectorAll('.report-toggle').forEach(function(b){
   function rowsFor(f){return D.filter(function(r){return f==='all'||fyOf(r.m)===f});}
   function td(v,cls){return '<td style="text-align:right"'+(cls?' class="'+cls+'"':'')+'>'+v+'</td>';}
   function cells(a,isGap){
-    if(isGap)return '<td colspan="9" style="text-align:center;color:var(--dim)">No statement covers this month: a gap, not a zero</td>';
-    return td(cmp(a.income),'income')+td(cmp(a.spent))+td(cmp(a.wasted),'habit')+td(cmp(a.fd),'invest')+td(cmp(a.other),'invest')+td(cmp(a.fam))+td(cmp(a.lend))+td(cmp(a.saved),a.saved<0?'expense':'income')+td(a.liquid==null?'-':cmp(a.liquid));
+    if(isGap)return '<td colspan="10" style="text-align:center;color:var(--dim)">No statement covers this month: a gap, not a zero</td>';
+    return td(cmp(a.income),'income')+td(cmp(a.spent))+td(cmp(a.wasted),'habit')+td(cmp(a.fd),'invest')+td(cmp(a.other),'invest')+td(cmp(a.fam))+td(cmp(a.lend))+td(cmp(a.saved),a.saved<0?'expense':'income')+td('<b>'+cmp(a.saved+a.fd+a.other)+'</b>',(a.saved+a.fd+a.other)<0?'expense':'income')+td(a.liquid==null?'-':cmp(a.liquid));
   }
-  var HEAD='<tr><th>Period</th><th style="text-align:right">Income</th><th style="text-align:right">Living</th><th style="text-align:right">Habit</th><th style="text-align:right">FD</th><th style="text-align:right">Invested</th><th style="text-align:right">Family</th><th style="text-align:right">Lending</th><th style="text-align:right">Remaining</th><th style="text-align:right">Liquid</th><th style="text-align:right">Quick comm.</th><th style="text-align:right">Subs</th><th style="text-align:right">Bills</th></tr>';
+  var HEAD='<tr><th>Period</th><th style="text-align:right">Income</th><th style="text-align:right">Living</th><th style="text-align:right">Habit</th><th style="text-align:right">FD</th><th style="text-align:right">Invested</th><th style="text-align:right">Family</th><th style="text-align:right">Lending</th><th style="text-align:right">Remaining</th><th style="text-align:right">Saved</th><th style="text-align:right">Liquid</th><th style="text-align:right">Quick comm.</th><th style="text-align:right">Subs</th><th style="text-align:right">Bills</th></tr>';
   function render(){
     var rows=rowsFor(view==='fy'?'all':fy),a=agg(rows);
     var inc=a.income;
     document.getElementById('ovLabel').textContent='Total income received'+(view==='month'&&fy!=='all'?' · '+fy.replace('FY','FY '):'');
     document.getElementById('ovIncome').textContent=full(inc);
     document.getElementById('ovIncomeSub').textContent=a.n+' salary credits'+(a.gap?' · '+a.gap+' month with no statement':'')+' · '+lab(rows[0].m)+' to '+lab(rows[rows.length-1].m);
-    var re=document.getElementById('ovRemain');re.textContent=sgn(a.saved);re.style.color=a.saved<0?'var(--brick)':'var(--teal)';
-    document.getElementById('ovRemainSub').textContent=Math.round(a.saved/inc*100)+'% of income left unspent';
+    var sv=a.saved+a.fd+a.other,re=document.getElementById('ovRemain');re.textContent=sgn(sv);re.style.color=sv<0?'var(--brick)':'var(--teal)';
+    document.getElementById('ovRemainSub').textContent=Math.round(sv/inc*100)+'% of income \u00B7 cash left '+sgn(a.saved)+' + FD '+cmp(a.fd)+' + invested '+cmp(a.other);
     var segs=[['Living',a.spent,'var(--dim2)',1],['Habit',a.wasted,'var(--amber)',1],['FD',a.fd,'var(--blue)',1],['Invested',a.other,'var(--blue)',.5],['Family',a.fam,'var(--brick)',1],['Lending',a.lend,'var(--brick)',.5],['Remaining',Math.max(a.saved,0),'var(--teal)',1]];
     var tot=segs.reduce(function(s,x){return s+x[1]},0),bar='',leg='';
     segs.forEach(function(s){if(s[1]<=0)return;bar+='<div title="'+s[0]+' '+full(s[1])+'" style="width:'+(s[1]/tot*100)+'%;background:'+s[2]+';opacity:'+s[3]+'"></div>';leg+='<span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+s[2]+';opacity:'+s[3]+';margin-right:6px"></span>'+s[0]+' '+Math.round(s[1]/inc*100)+'%</span>';});
@@ -706,7 +725,7 @@ document.querySelectorAll('.report-toggle').forEach(function(b){
     document.getElementById('ovBar').innerHTML=bar;document.getElementById('ovLegend').innerHTML=leg;
     var pc=function(v){return Math.round(v/inc*100)+'% of income'};
     var lastM=rows.filter(function(r){return !r.gap}).pop().m;
-    var tiles=[['Savings (remaining)',sgn(a.saved),pc(a.saved),a.saved<0?'expense':'income'],['Liquid (HDFC, '+lab(lastM)+')',full(a.liquid),'bank balance, not derived',''],['FD placed',full(a.fd),pc(a.fd),'invest'],['Invested',full(a.other),'BTC, Groww, Angel, MF · '+pc(a.other),'invest'],['Family',full(a.fam),pc(a.fam),''],['Lending',full(a.lend),pc(a.lend),''],['Quick commerce',full(a.qc),pc(a.qc)+' · memo','habit'],['Subscriptions',full(a.sub),(a.sub/inc*100).toFixed(1)+'% of income · memo',''],['Bills',full(a.bill),'Phone '+cmp(a.ph)+' · Power '+cmp(a.el)+' · Gas '+cmp(a.gs)+' · Car wash '+cmp(a.cw),'']];
+    var tiles=[['Total saved',sgn(a.saved+a.fd+a.other),pc(a.saved+a.fd+a.other)+' \u00B7 cash left + FD + invested',(a.saved+a.fd+a.other)<0?'expense':'income'],['Liquid (HDFC, '+lab(lastM)+')',full(a.liquid),'bank balance, not derived',''],['FD placed',full(a.fd),pc(a.fd),'invest'],['Invested',full(a.other),'BTC, Groww, Angel, MF · '+pc(a.other),'invest'],['Family',full(a.fam),pc(a.fam),''],['Lending',full(a.lend),pc(a.lend),''],['Quick commerce',full(a.qc),pc(a.qc)+' · memo','habit'],['Subscriptions',full(a.sub),(a.sub/inc*100).toFixed(1)+'% of income · memo',''],['Bills',full(a.bill),'Phone '+cmp(a.ph)+' · Power '+cmp(a.el)+' · Gas '+cmp(a.gs)+' · Car wash '+cmp(a.cw),'']];
     document.getElementById('ovTiles').innerHTML=tiles.map(function(t){return '<div class="stat"><div class="stat-label">'+t[0]+'</div><div class="stat-value '+t[3]+'">'+t[1]+'</div><div style="font-size:11px;color:var(--dim);margin-top:3px">'+t[2]+'</div></div>'}).join('');
     var h=HEAD,qcell=function(x){return td(cmp(x),'habit')},scell=function(x){return td(cmp(x))};
     if(view==='month'){
@@ -714,7 +733,7 @@ document.querySelectorAll('.report-toggle').forEach(function(b){
       var cur=null;
       rows.forEach(function(r){
         var f=fyOf(r.m);
-        if(f!==cur){cur=f;var sub=agg(rows.filter(function(x){return fyOf(x.m)===f}));h+='<tr><td colspan="13" style="background:var(--panel2);font-weight:600;padding:9px 8px">'+f.replace('FY','FY ')+' <span style="font-weight:400;color:var(--dim)">· '+sub.n+' months of data</span></td></tr>';}
+        if(f!==cur){cur=f;var sub=agg(rows.filter(function(x){return fyOf(x.m)===f}));h+='<tr><td colspan="14" style="background:var(--panel2);font-weight:600;padding:9px 8px">'+f.replace('FY','FY ')+' <span style="font-weight:400;color:var(--dim)">· '+sub.n+' months of data</span></td></tr>';}
         h+='<tr><td>'+lab(r.m)+'</td>'+cells(r,r.gap)+(r.gap?'':qcell(r.qc)+scell(r.sub)+scell(r.bill))+'</tr>';
       });
       h+='<tr><td><b>Total</b></td>'+cells(a)+qcell(a.qc)+scell(a.sub)+scell(a.bill)+'</tr>';
