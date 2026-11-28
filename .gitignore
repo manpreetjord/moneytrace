@@ -7,3 +7,4 @@ uploads/
 
 # Local ledger data: raw statements, generated ledger, manual overrides
 data/
+__pycache__/
