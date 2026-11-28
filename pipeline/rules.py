@@ -40,10 +40,11 @@ RULES = [
     # ---- habit (café / paan / wine / liquor), all confirmed ----
     ("habit",         "payee",     r"^BREW BROS|^NITIN SHIVNATH WANGE|^SHANI$|^SURAJ SAROJ|^SUDESH PAN|^GAURI SHANKAR|"
                                    r"BANARAS(I)? PA+N|^HERO PAN|PAN SHOP|PAAN|^SURAJ SHARAD SHINDE|^CHAI ?SUTTA|STYLISH TEA BAR|"
-                                   r"WINE|LIQUOR|BEER|^SHREE SATVA TRADITIO|SPORTS BAR|^NINE AVENUE"),
+                                   r"WINE|LIQUOR|BEER|^SHREE SATVA TRADITIO|SPORTS BAR|^NINE AVENUE|^PINKY THAKURDAS JAGWANI|^JAHANGIR ?ALI|^POONAM"),
 
     # ---- card bills (card spend itself is not itemised: no full card statements) ----
     ("card_bill",     "payee",     r"^CRED CLUB$|^CRED$|^SBI CARDS"),
+    ("card_bill",     "narration", r"GPAY-CREDITCARD@"),
 
     # ---- bills ----
     ("bill_phone",    "payee",     r"^(BHARTI )?AIRTEL"),
@@ -53,17 +54,31 @@ RULES = [
     ("bill_carwash",  "narration", r"-CAR WASH"),
 
     # ---- subscriptions ----
-    ("subscription",  "payee",     r"^NETFLIX|^APPLE MEDIA"),
-    ("subscription",  "narration", r"PLAYSTORE|GOOGLE PLAY|CLAUDE\.AI"),
+    ("subscription",  "payee",     r"^NETFLIX|^APPLE MEDIA|^JEEVANSATHI"),
+    ("subscription",  "narration", r"PLAYSTORE|GOOGLE PLAY|CLAUDE\.AI|ANTHROPIC"),
 
     # ---- living, by type ----
     ("quick_commerce","payee",     r"BLINKIT|ZEPTO|GROFERS|INSTAMART"),
     ("groceries",     "payee",     r"SUPER ?MA(RKET|LL)?\b|^SHREE GANESH SUPER|^VIGHNAHARTA SUPER|KIRANA|^GREEN MART|^VEGGIES|DMART|^PUBLIC BAZAAR"),
-    ("food",          "payee",     r"SWIGGY|ZOMATO|^ETERNAL LIMITED|^POONAM|^JAHANGIR ?ALI"),
-    ("shopping",      "payee",     r"AMAZON|FLIPKART|MYNTRA|^CROMA|^TRENT|^ASICS|^AXIS$"),
-    ("travel",        "payee",     r"MAKEMYTRIP|^MMT|IRCTC|CONFIRM ?TICKET|^REDBUS"),
+    ("food",          "payee",     r"SWIGGY|ZOMATO|^ETERNAL LIMITED"),
+    ("shopping",      "payee",     r"AMAZON|FLIPKART|MYNTRA|^CROMA|^TRENT|^ASICS|^AXIS$|^LENSKART|^DECATHLON"),
+    ("shopping",      "narration", r"^(CRV )?POS .*(AMAZON|MYNTRA)|^IMPS-.*MYNTRA"),
+    ("travel",        "payee",     r"MAKE ?MY ?TRIP|^MMT|IRCTC|CONFIRM ?TICKET|^REDBUS|^INDIGO|^IXIGO"),
+    # forex bought for travel: payee VPA is EbixCash World Money (forex dealer)
+    ("travel",        "narration", r"EBIXCASHWORLDMONEY"),
     ("transport",     "payee",     r"PETROLEUM|^ARUN KATHWATE|^UBER|^RAPIDO|^OLA\b"),
-    ("health",        "payee",     r"HOSPITAL$|HOSPITAL |HOSPITALOPD|MEDICO|PHARMA|CLINIC|^ASK PATH"),
+    ("car",           "payee",     r"^CAR TECH CARE"),
+    ("car",           "narration", r"-CAR BUMPER REPAIR"),
+    ("health",        "payee",     r"HOSPITAL$|HOSPITAL |HOSPITALOPD|MEDICO|PHARMA|CLINIC|^ASK PATH|CHEMIST"),
+    ("groceries",     "payee",     r"VEGETABLE"),
+    ("insurance",     "payee",     r"^DIGIT$|POLICYBAZAAR|^PAID - INSURANCE"),
+    ("education",     "payee",     r"^NAMASTEDEV"),
+    ("bill_other",    "narration", r"GOOGLEBBPSUTILITY@"),
+    ("cash",          "narration", r"^(ATW|NWD|EAW)-"),
+    ("fx_fees",       "narration", r"^\.DC INTL POS TXN MARKUP|^RFX "),
+    # PhonePe wallet top-ups: what the wallet bought is not itemised anywhere
+    ("wallet_topup",  "narration", r"PHONEPEWALLETTOPUP|\*+OPUP@YBL"),
+    ("wallet_topup",  "payee",     r"^WALLET TOP-UP"),
 ]
 
 BUCKET = {
@@ -72,7 +87,8 @@ BUCKET = {
     "family": "family", "lending": "lending", "poker": "living", "habit": "habit",
     "card_bill": "living", "bill_phone": "living", "bill_power": "living", "bill_gas": "living",
     "bill_carwash": "living", "subscription": "living", "quick_commerce": "living", "groceries": "living",
-    "food": "living", "shopping": "living", "travel": "living", "transport": "living", "health": "living",
+    "food": "living", "shopping": "living", "car": "living", "insurance": "living", "education": "living",
+    "bill_other": "living", "cash": "living", "fx_fees": "living", "wallet_topup": "living", "travel": "living", "transport": "living", "health": "living",
     "unreviewed": "living",
 }
 

@@ -47,6 +47,11 @@ Lessons the pipeline encodes:
   ~₹1L (habit merchants under EMI/Loans, Wine Metro under Transport, Trent under Rent).
 - UPI ref (12 digits in the HDFC narration = PhonePe UTR = GPay "UPI Transaction ID") gives exact
   dedup; every PhonePe/GPay XX3937 row matched a bank row except July '26 (no HDFC statement).
+- Read the full HDFC narration before asking about a payee: the UPI remark/VPA often says what
+  it was (EbixCash forex VPA = Pravin Thorat ₹51,292 travel forex; "GURPREET KAUR TRIP" remark on
+  Bimla Chahar ₹11,255; "GPAY-CREDITCARD@" = card bill; "CAR BUMPER REPAIR"). Decisions the user
+  confirmed earlier (old Review/Lending tabs) are in rules.py or data/overrides.json: …2499 ₹39,999 =
+  lending to Nitin Shivankit; Sumit Beniwal lending is only the ₹1,500 SBI payment on 4 Nov '26.
 - Month-end liquid = balance on the last HDFC row of the month in file order. The old numbers were
   wrong for some months (Apr '26 showed ₹56,698; real ₹1,93,955).
 
