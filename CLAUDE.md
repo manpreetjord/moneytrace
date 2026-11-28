@@ -121,13 +121,13 @@ Rule that's been load-bearing every time a new statement shows up:
 ## Known people (so you don't have to re-ask)
 - **Habit-spend merchants**: Brew Bros Cafe & Nitin = same person/cafe, SHANI =
   paan shop, Suraj Saroj/Banaras Paan Darbar/Hero Pan shop = paan shops,
-  Jahangir Ali = juice shop, Poonam = food, Wine Metro & Bar / Nine Avenue
+  Jahangir Ali = juice shop, Poonam = food, Kalpana Manoj Mehta & Shivanand Hospitality = paan shops, Wine Metro & Bar / Nine Avenue
   Luxury Liquor / The Liquor Story / Vishal Wines / Lakshya Wines = liquor
 - **Lending**: Gaurav Chahal, Nitin Shivankit, Sunny Bose, Saurabh Singh,
   Samrendra Singh Sisodia, Sumit Gaur, Sumit Beniwal, Shubham Kumar Pandey —
   see Lending tab for live balances. Rahul Yadav is poker, not lending.
 - **Family (not loans, deliberately excluded from the lending gap)**:
-  Jasbir Kaur, Gurkirpal Singh (college fees), Aditi Yadav (Dubai trip, parents)
+  Jasbir Kaur, Gurkirpal Singh (college fees), Aditi Yadav (Dubai trip, parents), Gurpreet Kaur (sister)
 - **Still unconfirmed** — don't categorize these without asking: Pravin Thorat
   (₹51,292), Bimla Chahar (₹11,255), Ashvani Kumar (₹10,000), and several
   super.money names flagged in the Review tab (Aman Deo, Niranjan Kumar, Sutar

@@ -30,7 +30,7 @@ RULES = [
     ("invest_market", "payee",     r"GROWW|ICCL|^ANGEL ONE|^MUTUAL FUNDS"),
 
     # ---- family (confirmed, excluded from lending) ----
-    ("family",        "payee",     r"JASBIR ?KAUR|^GURKIRPAL SINGH|^ADITI YADAV"),
+    ("family",        "payee",     r"JASBIR ?KAUR|^GURKIRPAL SINGH|^ADITI YADAV|^GURPREET ?KAUR"),  # Gurpreet Kaur = sister
 
     # ---- lending (confirmed people) and poker ----
     ("lending",       "payee",     r"^GAURAV CHAHAL|^NITIN SHIVANKIT|^SUNNY ?BOSE|^(MR )?SAURABH SINGH|^SAMRENDRA SINGH|"
@@ -40,7 +40,8 @@ RULES = [
     # ---- habit (café / paan / wine / liquor), all confirmed ----
     ("habit",         "payee",     r"^BREW BROS|^NITIN SHIVNATH WANGE|^SHANI$|^SURAJ SAROJ|^SUDESH PAN|^GAURI SHANKAR|"
                                    r"BANARAS(I)? PA+N|^HERO PAN|PAN SHOP|PAAN|^SURAJ SHARAD SHINDE|^CHAI ?SUTTA|STYLISH TEA BAR|"
-                                   r"WINE|LIQUOR|BEER|^SHREE SATVA TRADITIO|SPORTS BAR|^NINE AVENUE|^PINKY THAKURDAS JAGWANI|^JAHANGIR ?ALI|^POONAM"),
+                                   r"WINE|LIQUOR|BEER|^SHREE SATVA TRADITIO|SPORTS BAR|^NINE AVENUE|^PINKY THAKURDAS JAGWANI|^JAHANGIR ?ALI|^POONAM|"
+                                   r"^KALPANA MANOJ MEHTA|^SHIVANAND HOSPITALIT"),  # last two: paan shops (user)
 
     # ---- card bills (card spend itself is not itemised: no full card statements) ----
     ("card_bill",     "payee",     r"^CRED CLUB$|^CRED$|^SBI CARDS"),
